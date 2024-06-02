@@ -13,60 +13,65 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            line-height: 1.6;
+            line-height: 1.5;
         }
         header {
             background-color: #FFFFFF;
             color: #000000;
             padding: 20px 5px;
-            text-align: left;
+            text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             position: relative;
             flex-wrap: wrap; /* Allow items to wrap */
         }
-        .logo-left, .logo-right {
-            width: 200px;
-            height: auto;
-            margin: 0 10px;
-            text-align: center;
+        .buttons {
+            margin-top: 10px;
         }
-        .logo-left img, .logo-right img {
-            width: 100%;
-            height: auto;
+        .button {
+            margin: 0 10px;
+            padding: 1px 16px; /* Adjust button padding */
+            border-radius: 20px;
+            background-color: #007bff;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 0.8rem; /* Adjust button font size */
+        }
+        .button:hover {
+            background-color: #0056b3;
         }
         h1 {
             font-family: 'Sacramento', cursive;
-            font-size: 3rem;
+            font-size: 1.5rem;
             margin: 0;
+            padding: 40px 30px;
             white-space: nowrap; /* Ensure the text doesn't wrap */
         }
         h2 {
             font-family: 'Sacramento', cursive;
-            font-size: 2rem;
+            font-size: 1rem;
             margin: 0;
-            padding-left: 100px;
+            padding-left: 1px;
             margin-top: 10px;
         }
         ol {
             font-family: 'Sacramento', cursive;
             font-size: 1rem;
-            list-style-type: decimal;
-            padding-left: 260px;
+            list-style-type: none; /* Remove numbering */
+            padding-left: 100;
             margin-top: 10px;
         }
         p {
-            margin: 5px 0 0 0;
+            margin: 2px 0 0 0;
         }
+
         nav {
             background-color: #FFFFFF;
-            padding: 1px 10px;
+            padding: 0.2px 610px;
             text-align: right;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 2px;
+            left: 2px;
             display: flex;
             align-items: center;
         }
@@ -81,28 +86,29 @@
         nav ul li a {
             color: #00008B;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 100px 100px; /* Adjust button padding */
             border-radius: 20px;
             background-color: #007bff;
             transition: background-color 0.3s ease;
+            font-size: 50rem; /* Adjust button font size */
         }
         nav ul li a:hover {
             background-color: #0056b3;
         }
         main {
-            padding: 20px;
+            padding: 10px;
         }
         section {
-            margin-bottom: 10px;
+            margin-bottom: 2px;
             background-color: #fff;
-            padding: 10px;
+            padding: 2px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             display: none; /* Initially hide the section */
         }
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-top: 20px;
         }
         footer {
@@ -114,10 +120,6 @@
 
         /* Media queries for responsiveness */
         @media screen and (max-width: 768px) {
-            .logo-left, .logo-right {
-                width: 100%;
-                margin: 10px 0;
-            }
             h2, ol {
                 padding-left: 0;
                 text-align: center;
@@ -134,9 +136,6 @@
 <body>
 
 <header>
-    <div class="logo-left">
-        <img src="name.jpg" alt="Left Logo">
-    </div>
     <div>
         <h1>Senior QE Automation Engineer</h1>
         <h2>Key Skills:</h2>
@@ -156,15 +155,12 @@
             <li>ISTQB Certified</li>
         </ol>
     </div>
-    <div class="logo-right">
-        <img src="logo.png" alt="Right Logo">
-    </div>
 
     <nav>
         <ul>
-            <li><a href="#" data-section-id="homeSection">Home</a></li>
-            <li><a href="#" data-section-id="aboutSection">About</a></li>
-            <li><a href="#" data-section-id="contactSection">Contact</a></li>
+            <li><a class="button" href="#" data-section-id="homeSection">Home</a></li>
+            <li><a class="button" href="#" data-section-id="aboutSection">About</a></li>
+            <li><a class="button" href="#" data-section-id="contactSection">Contact</a></li>
         </ul>
     </nav>
 </header>
@@ -172,7 +168,7 @@
 <main>
     <section id="homeSection">
         <h2 class="section-title">Home</h2>
-        <p>Hi, I'm Madan Mohan Reddy , a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
+        <p>Hi, I'm Madan</p>
     </section>
     <section id="aboutSection">
         <h2 class="section-title">About Me</h2>
