@@ -14,34 +14,30 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             line-height: 1.6;
-            width: 210mm;
-            height: 297mm;
-            margin: auto;
-            padding: 20mm;
-            box-sizing: border-box;
         }
         header {
             background-color: #FFFFFF;
             color: #000000;
-            padding: 10mm;
+            padding: 20px 5px;
             text-align: left;
-            box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: relative;
+            flex-wrap: wrap; /* Allow items to wrap */
         }
         .logo-left, .logo-right {
-            width: 20mm;
+            width: 200px;
             height: auto;
-            margin: 0 5mm;
+            margin: 0 10px;
             text-align: center;
         }
         .logo-left img, .logo-right img {
             width: 100%;
             height: auto;
         }
-       h1 {
+        h1 {
             font-family: 'Sacramento', cursive;
             font-size: 3rem;
             margin: 0;
@@ -51,26 +47,26 @@
             font-family: 'Sacramento', cursive;
             font-size: 2rem;
             margin: 0;
-            padding-left: 20mm;
-            margin-top: 5mm;
+            padding-left: 100px;
+            margin-top: 10px;
         }
         ol {
             font-family: 'Sacramento', cursive;
             font-size: 1rem;
             list-style-type: decimal;
-            padding-left: 40mm;
-            margin-top: 5mm;
+            padding-left: 260px;
+            margin-top: 10px;
         }
         p {
-            margin: 5mm 0 0 0;
+            margin: 5px 0 0 0;
         }
         nav {
             background-color: #FFFFFF;
-            padding: 1mm 5mm;
+            padding: 1px 10px;
             text-align: right;
             position: absolute;
-            top: 5mm;
-            right: 5mm;
+            top: 20px;
+            right: 20px;
             display: flex;
             align-items: center;
         }
@@ -80,13 +76,13 @@
             align-items: center;
         }
         nav ul li {
-            margin: 0 5mm;
+            margin: 0 10px;
         }
         nav ul li a {
             color: #00008B;
             text-decoration: none;
-            padding: 5mm 10mm;
-            border-radius: 10mm;
+            padding: 10px 20px;
+            border-radius: 20px;
             background-color: #007bff;
             transition: background-color 0.3s ease;
         }
@@ -94,26 +90,44 @@
             background-color: #0056b3;
         }
         main {
-            padding: 10mm;
+            padding: 20px;
         }
         section {
-            margin-bottom: 5mm;
+            margin-bottom: 10px;
             background-color: #fff;
-            padding: 5mm;
-            border-radius: 5mm;
-            box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: none; /* Initially hide the section */
         }
         .section-title {
             text-align: center;
             font-size: 2rem;
-            margin-top: 5mm;
+            margin-top: 20px;
         }
         footer {
             background-color: #333;
             color: #fff;
-            padding: 5mm 0;
+            padding: 10px 0;
             text-align: center;
+        }
+
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
+            .logo-left, .logo-right {
+                width: 100%;
+                margin: 10px 0;
+            }
+            h2, ol {
+                padding-left: 0;
+                text-align: center;
+            }
+            nav {
+                position: static; /* Remove absolute positioning */
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -158,8 +172,7 @@
 <main>
     <section id="homeSection">
         <h2 class="section-title">Home</h2>
-        <p>Hi, I'm Madan Mohan Reddy, a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
-        <!-- Add more details as needed -->
+        <p>Hi, I'm Madan Mohan Reddy , a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
     </section>
     <section id="aboutSection">
         <h2 class="section-title">About Me</h2>
