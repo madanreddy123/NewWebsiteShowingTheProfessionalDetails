@@ -1,0 +1,8 @@
+Building the image
+
+docker build -t personnel .
+
+
+running the image
+
+docker run -d -p 8080:80 --name MyWebsite personnel
