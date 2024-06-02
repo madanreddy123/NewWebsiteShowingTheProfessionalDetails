@@ -6,7 +6,7 @@
     <title>My Personal Website</title>
     <style>
         /* Reset default browser styles */
-        body, h1, h2, p, ul, li {
+        body, h1, p, ul, li, ol {
             margin: 0;
             padding: 0;
         }
@@ -17,24 +17,68 @@
         }
         header {
             background-color: #FFFFFF;
-            color: #800000;
-            padding: 20px;
+            color: #000000;
+            padding: 40px 5px;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        .logo-left, .logo-right {
+            width: 200rem;
+            height: auto;
+            margin: 0 10px;
             text-align: center;
+        }
+        .logo-left img, .logo-right img {
+            width: 100%;
+            height: auto;
+        }
+       h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3rem;
+            margin: 0;
+            white-space: nowrap; /* Ensure the text doesn't wrap */
+        }
+        h2 {
+            font-family: 'Sacramento', cursive;
+            font-size: 2rem;
+            margin: 0;
+            padding-left: 100px;
+            margin-top: 10px;
+        }
+        ol {
+            font-family: 'Sacramento', cursive;
+            font-size: 1rem;
+            list-style-type: decimal;
+            padding-left: 260px;
+            margin-top: 10px;
+        }
+        p {
+            margin: 5px 0 0 0;
         }
         nav {
             background-color: #FFFFFF;
-            padding: 10px 0;
-            text-align: center;
+            padding: 1px 10px;
+            text-align: right;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
         }
         nav ul {
             list-style-type: none;
+            display: flex;
+            align-items: center;
         }
         nav ul li {
-            display: inline;
             margin: 0 10px;
         }
         nav ul li a {
-            color: #fff;
+            color: #00008B;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 20px;
@@ -42,18 +86,23 @@
             transition: background-color 0.3s ease;
         }
         nav ul li a:hover {
-            background-color: #000000;
+            background-color: #0056b3;
         }
         main {
-            padding: 20px;
+            padding: 49px;
         }
         section {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: none; /* Initially hide the section */
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 20px;
         }
         footer {
             background-color: #333;
@@ -63,51 +112,107 @@
         }
     </style>
 </head>
-
 <body>
+
 <header>
-    <h1>My Professional details</h1>
+    <div class="logo-left">
+        <img src="name.jpg" alt="Left Logo">
+    </div>
+    <div>
+        <h1>Senior QE Automation Engineer</h1>
+        <h2>Key Skills:</h2>
+        <ol>
+            <li>Selenium WebDriver using Java</li>
+            <li>Selenium Grid</li>
+            <li>Cucumber Framework (BDD)</li>
+            <li>Data-Driven Framework (TDD)</li>
+            <li>TestNG Framework</li>
+            <li>JUnit</li>
+            <li>Maven</li>
+            <li>Git</li>
+            <li>SQL Server</li>
+            <li>Continuous Integration Tools (Jenkins, Bamboo)</li>
+            <li>Docker</li>
+            <li>Appium</li>
+            <li>ISTQB Certified</li>
+        </ol>
+    </div>
+    <div class="logo-right">
+        <img src="logo.png" alt="Right Logo">
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#" data-section-id="homeSection">Home</a></li>
+            <li><a href="#" data-section-id="aboutSection">About</a></li>
+            <li><a href="#" data-section-id="contactSection">Contact</a></li>
+        </ul>
+    </nav>
 </header>
-<nav>
-    <ul>
-        <li><a href="#" onclick="showSection('homeSection')">Home</a></li>
-        <li><a href="#" onclick="showSection('aboutSection')">About</a></li>
-        <li><a href="#" onclick="showSection('contactSection')">Contact</a></li>
-    </ul>
-</nav>
+
 <main>
     <section id="homeSection">
-        <h2>Home</h2>
-        <p>Hi, I'm Madan Mohan Reddy , a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Rest assured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation. </p>
+        <h2 class="section-title">Home</h2>
+        <p>Hi, I'm Madan Mohan Reddy , a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
         <!-- Add more details as needed -->
     </section>
     <section id="aboutSection">
-        <h2>About Me</h2>
+        <h2 class="section-title">About Me</h2>
         <p>Name: Madan Mohan Reddy</p>
         <p>Designation: Senior QE Automation Engineer</p>
         <!-- Add more details as needed -->
     </section>
     <section id="contactSection">
-        <h2>Contact</h2>
-        <p>MobileNumber: 08999999</p>
-        <p>EmailID: mmohanreddy319@gmail.com</p>
+        <h2 class="section-title">Contact</h2>
+        <p>Mobile Number: +353 899679102</p>
+        <p>Email ID: mmohanreddy319@gmail.com</p>
         <!-- Add contact form or details as needed -->
     </section>
 </main>
+
 <footer>
     <p>&copy; 2024 My Personal Website</p>
 </footer>
 
 <!-- JavaScript to toggle visibility of sections -->
 <script>
-    function showSection(sectionId) {
+    // Wait for the DOM content to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all sections
         var sections = document.querySelectorAll("section");
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].style.display = "none"; // Hide all sections
+
+        // Hide all sections initially
+        function hideAllSections() {
+            sections.forEach(function(section) {
+                section.style.display = "none";
+            });
         }
-        var section = document.getElementById(sectionId);
-        section.style.display = "block"; // Show the selected section
-    }
+
+        // Show a specific section
+        function showSection(sectionId) {
+            hideAllSections();
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = "block";
+            }
+        }
+
+        // Add click event listeners to navigation links
+        var navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function(navLink) {
+            navLink.addEventListener("click", function(event) {
+                var sectionId = navLink.getAttribute("data-section-id");
+                if (sectionId) {
+                    event.preventDefault(); // Prevent default link behavior
+                    showSection(sectionId);
+                }
+            });
+        });
+
+        // Show the default section on page load
+        showSection("homeSection");
+    });
 </script>
+
 </body>
 </html>
