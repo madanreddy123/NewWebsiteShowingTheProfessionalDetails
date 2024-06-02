@@ -18,42 +18,40 @@
         header {
             background-color: #FFFFFF;
             color: #000000;
-            padding: 40px 5px;
+            padding: 20px;
             text-align: left;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
+            flex-wrap: wrap;
         }
         .logo-left, .logo-right {
-            width: 200rem;
+            width: 100px;
             height: auto;
             margin: 0 10px;
-            text-align: center;
         }
         .logo-left img, .logo-right img {
             width: 100%;
             height: auto;
         }
-       h1 {
-            font-family: 'Sacramento', cursive;
-            font-size: 3rem;
-            margin: 0;
-            white-space: nowrap; /* Ensure the text doesn't wrap */
-        }
-        h2 {
+        h1 {
             font-family: 'Sacramento', cursive;
             font-size: 2rem;
             margin: 0;
-            padding-left: 100px;
-            margin-top: 10px;
+            white-space: nowrap;
+        }
+        h2 {
+            font-family: 'Sacramento', cursive;
+            font-size: 1.5rem;
+            margin: 10px 0 0 0;
+            padding-left: 10px;
         }
         ol {
             font-family: 'Sacramento', cursive;
             font-size: 1rem;
             list-style-type: decimal;
-            padding-left: 260px;
+            padding-left: 20px;
             margin-top: 10px;
         }
         p {
@@ -63,9 +61,6 @@
             background-color: #FFFFFF;
             padding: 1px 10px;
             text-align: right;
-            position: absolute;
-            top: 20px;
-            right: 20px;
             display: flex;
             align-items: center;
         }
@@ -73,36 +68,39 @@
             list-style-type: none;
             display: flex;
             align-items: center;
+            padding: 0;
+            margin: 0;
         }
         nav ul li {
-            margin: 0 10px;
+            margin: 0 5px;
         }
         nav ul li a {
             color: #00008B;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 20px;
             background-color: #007bff;
             transition: background-color 0.3s ease;
+            font-size: 1rem;
         }
         nav ul li a:hover {
             background-color: #0056b3;
         }
         main {
-            padding: 49px;
+            padding: 20px;
         }
         section {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             background-color: #fff;
-            padding: 10px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: none; /* Initially hide the section */
         }
         .section-title {
             text-align: center;
-            font-size: 2rem;
-            margin-top: 20px;
+            font-size: 1.5rem;
+            margin-top: 0;
         }
         footer {
             background-color: #333;
@@ -110,14 +108,64 @@
             padding: 10px 0;
             text-align: center;
         }
+
+        @media (max-width: 768px) {
+            header {
+                text-align: center;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            nav {
+                text-align: center;
+                padding: 0;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 5px 0;
+            }
+            h2 {
+                font-size: 1.2rem;
+                padding-left: 0;
+            }
+            ol {
+                padding-left: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            h2 {
+                font-size: 1rem;
+            }
+            nav ul li a {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            ol {
+                padding-left: 20px;
+                font-size: 0.9rem;
+            }
+            section {
+                padding: 10px;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-left">
-        <img src="name.jpg" alt="Left Logo">
-    </div>
+        <div class="logo-left">
+            <img src="name.jpg" alt="Left Logo">
+        </div>
     <div>
         <h1>Senior QE Automation Engineer</h1>
         <h2>Key Skills:</h2>
@@ -137,9 +185,9 @@
             <li>ISTQB Certified</li>
         </ol>
     </div>
-    <div class="logo-right">
-        <img src="logo.png" alt="Right Logo">
-    </div>
+        <div class="logo-right">
+            <img src="logo.png" alt="Right Logo">
+        </div>
 
     <nav>
         <ul>
