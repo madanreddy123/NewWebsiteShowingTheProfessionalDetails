@@ -18,6 +18,10 @@
     position: relative; /* Make the body a positioned element */
     background: url('ai2.jpg') no-repeat center center fixed; /* Set the background image and keep it fixed */
     background-size: auto 690px; /* Set the background image size */
+     min-height: 100vh; /* Ensure body covers the entire viewport */
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    justify-content: space-between; /* Push footer to the bottom */
 }
     header {
         background-color: rgba(255, 255, 255, 0.3); /* Set a more transparent white background */
