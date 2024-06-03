@@ -13,7 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 2;
-            background-image: url(name1.jpg); /* Set the background image */
+<!--            background-image: url(name1.jpg); /* Set the background image */-->
             background-size: cover; /* Cover the entire background */
             background-repeat: no-repeat; /* Do not repeat the background image */
         }
@@ -28,12 +28,19 @@
             flex-direction: column; /* Arrange items in a column */
             align-items: center; /* Center align items horizontally */
         }
+        .profile-image {
+            margin: 10px 0; /* Add margin around the image */
+            border-radius: 50%; /* Optional: make the image circular */
+            width: 420px; /* Set a fixed width for the image */
+            height: 420px; /* Set a fixed height for the image */
+            object-fit: cover; /* Ensure the image covers the space */
+        }
         .buttons {
             margin-top: 10px;
         }
         .button {
-            margin: 0 10px;
-            padding: 10px 20px;
+            margin: 0 2px; /* Reduced margin between buttons */
+            padding: 10px 24px;
             border-radius: 20px;
             background-color: #007bff;
             color: #FFFFFF;
@@ -45,20 +52,17 @@
             background-color: #0056b3;
         }
         h1 {
-<!--            font-family: 'Sacramento', cursive;-->
             font-size: 1rem;
             margin: 0;
             white-space: nowrap; /* Ensure the text doesn't wrap */
         }
         h2 {
-<!--            font-family: 'Sacramento', cursive;-->
             font-size: 1rem;
             margin: 0;
             padding-left: 1px;
             margin-top: 10px;
         }
         ol {
-<!--            font-family: 'Sacramento', cursive;-->
             font-size: 1rem;
             list-style-type: none;
             padding-left: 100;
@@ -79,7 +83,7 @@
             align-items: center;
         }
         nav ul li {
-            margin: 0 10px;
+            margin: 0 5px; /* Reduced margin between list items */
         }
         nav ul li a {
             color: #00008B;
@@ -135,7 +139,33 @@
 <header>
     <div>
         <h1>Automation Engineer</h1>
-        <h2>Key Skills:</h2>
+    </div>
+    <img src="logo.png" alt="Profile Image" class="profile-image">
+    <nav>
+        <ul>
+            <li><a class="button" href="#" data-section-id="homeSection">Home</a></li>
+            <li><a class="button" href="#" data-section-id="aboutSection">About</a></li>
+            <li><a class="button" href="#" data-section-id="skillsSection">Skills</a></li>
+            <li><a class="button" href="#" data-section-id="contactSection">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="homeSection">
+        <h2 class="section-title">Home</h2>
+        <p>Hi, I'm Madan Mohan Reddy, a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
+    </section>
+
+    <section id="aboutSection">
+        <h2 class="section-title">About Me</h2>
+        <p>Name: Madan Mohan Reddy</p>
+        <p>Designation: Senior QE Automation Engineer</p>
+        <!-- Add more details as needed -->
+    </section>
+
+    <section id="skillsSection">
+        <h2 class="section-title">Key Skills</h2>
         <ol>
             <li>Selenium WebDriver using Java</li>
             <li>Selenium Grid</li>
@@ -150,29 +180,8 @@
             <li>Docker</li>
             <li>Appium</li>
         </ol>
-    </div>
-
-    <nav>
-        <ul>
-            <li><a class="button" href="#" data-section-id="homeSection">Home</a></li>
-            <li><a class="button" href="#" data-section-id="aboutSection">About</a></li>
-            <li><a class="button" href="#" data-section-id="contactSection">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-
-<main>
-    <section id="homeSection">
-        <h2 class="section-title">Home</h2>
-        <p>Hi, I'm Madan Mohan Reddy , a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
-
     </section>
-    <section id="aboutSection">
-        <h2 class="section-title">About Me</h2>
-        <p>Name: Madan Mohan Reddy</p>
-        <p>Designation: Senior QE Automation Engineer</p>
-        <!-- Add more details as needed -->
-    </section>
+
     <section id="contactSection">
         <h2 class="section-title">Contact</h2>
         <p>Mobile Number: +353 899679102</p>
