@@ -33,10 +33,10 @@
             display: inline-block;
         }
         .profile-image {
-            margin: 10px 0; /* Add margin around the image */
-            border-radius: 50%; /* Optional: make the image circular */
-            width: 520px; /* Set a fixed width for the image */
-            height: 420px; /* Set a fixed height for the image */
+            margin: 0px 0; /* Add margin around the image */
+<!--            border-radius: 50%; /* Optional: make the image circular */-->
+            width: 450px; /* Set a fixed width for the image */
+            height: 400px; /* Set a fixed height for the image */
             object-fit: cover; /* Ensure the image covers the space */
         }
         .profile-container::before {
@@ -49,13 +49,13 @@
             bottom: 0;
             background: url('ai2.png') no-repeat center center; /* Set the background image */
             background-size: cover; /* Cover the entire container with the background image */
-            border-radius: 100%;
+            border-radius: 56%;
             z-index: -1; /* Place it behind the profile image */
         }
         .menu-icon {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 2px;
+            right: 7px;
             cursor: pointer;
             padding: 5px;
             background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent background */
@@ -73,9 +73,9 @@
             width: 100%;
 <!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */-->
             z-index: 2; /* Make sure dropdown is above other content */
-            left: 60%;
+            left: 59%;
             transform: translateX(50%); /* Center the dropdown */
-            margin-top: 80px; /* Add margin at the top to appear below the menu icon */
+            margin-top: 50px; /* Add margin at the top to appear below the menu icon */
             border-radius: 1px;
         }
         .dropdown-content a {
