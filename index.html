@@ -66,16 +66,16 @@
             z-index: 1; /* Ensure it's above the image */
         }
         .dropdown-content {
-            display: none; /* Hide the dropdown content initially */
+            display: flex; /* Hide the dropdown content initially */
             position: absolute;
             background-color: rgba(255, 255, 255, 0.9); /* Set a semi-transparent white background */
             max-width: 100px; /* Set maximum width to match the profile image */
             width: 10%;
 <!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */-->
             z-index: 1; /* Make sure dropdown is above other content */
-            left: 60%;
+            left: 20%;
             transform: translateX(50%); /* Center the dropdown */
-            margin-top: 50px; /* Add margin at the top to appear below the menu icon */
+            margin-top: 350px; /* Add margin at the top to appear below the menu icon */
             border-radius: 1px;
         }
         .dropdown-content a {
@@ -167,7 +167,7 @@
         <a href="#" data-section-id="aboutSection">About</a>
         <a href="#" data-section-id="skillsSection">Skills</a>
         <a href="#" data-section-id="contactSection">Contact</a>
-        <a href="#" onclick="toggleMenu()">✖ Close</a>
+<!--        <a href="#" onclick="toggleMenu()">✖ Close</a>-->
     </div>
 </header>
 <main>
