@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <style>
+        /* Reset default browser styles */
+        body, h1, p, ul, li, ol {
+            margin: 0;
+            padding: 0;
+        }
+   body {
+    font-family: Arial, sans-serif;
+    line-height: 2;
+    color: #FFFFFF; /* Set a default text color to ensure readability */
+<!--    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Add text shadow for readability */-->
+    position: relative; /* Make the body a positioned element */
+    background: url('ai2.jpg') no-repeat center center fixed; /* Set the background image and keep it fixed */
+    background-size: auto 2000px; /* Set the background image size */
+     min-height: 100vh; /* Ensure body covers the entire viewport */
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    justify-content: space-between; /* Push footer to the bottom */
+}
+    header {
+    background: url('ai2.jpg') no-repeat center center fixed; /* Set the header background image and keep it fixed */
+    background-size: cover; /* Cover the entire header with the background image */
+<!--        background-color: rgba(255, 255, 255, 0.3); /* Set a more transparent white background */-->
+<!--        color: #FFFFFF;-->
+        padding: 20px 5px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: flex;
+        flex-direction: column; /* Arrange items in a column */
+        align-items: center; /* Center align items horizontally */
+    }
+    .profile-image {
+        margin: 10px 0; /* Add margin around the image */
+        border-radius: 50%; /* Optional: make the image circular */
+        width: 420px; /* Set a fixed width for the image */
+        height: 420px; /* Set a fixed height for the image */
+        object-fit: cover; /* Ensure the image covers the space */
+    }
+    .buttons {
+        margin-top: 10px;
+    }
+    .button {
+        margin: 0 2px; /* Reduced margin between buttons */
+        padding: 10px 24px;
+        border-radius: 20px;
+        background-color: rgba(0, 123, 255, 0.8); /* Set a semi-transparent blue background */
+        color: #FFFFFF;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 0.8rem;
+    }
+    .button:hover {
+        background-color: rgba(0, 86, 179, 0.8); /* Set a semi-transparent blue hover background */
+    }
+    h1 {
+        font-size: 1rem;
+        margin: 0;
+<!--        white-space: nowrap; /* Ensure the text doesn't wrap */-->
+    }
+    h2 {
+        font-size: 1rem;
+        margin: 0;
+        padding-left: 1px;
+        margin-top: 10px;
+    }
+    ol {
+        font-size: 1rem;
+        list-style-type: none;
+        padding-left: 100;
+        margin-top: 10px;
+    }
+    p {
+        margin: 2px 0 0 0;
+    }
+
+    nav {
+        background-color: rgba(255, 255, 255, 0.3); /* Set a more transparent white background */
+        display: flex;
+        align-items: center;
+    }
+    nav ul {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+    }
+    nav ul li {
+        margin: 0 5px; /* Reduced margin between list items */
+    }
+    nav ul li a {
+        color: #FFFFFF;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent background */
+        transition: background-color 0.3s ease;
+        font-size: 0.8rem;
+    }
+    nav ul li a:hover {
+        background-color: rgba(0, 86, 179, 0.8); /* Set semi-transparent hover background */
+    }
+    main {
+        padding: 10px;
+<!--         white-space: nowrap; /* Ensure the text doesn't wrap */-->
+    }
+   section {
+   color: #000000;/* Set text color to black */
+    padding: 20px; /* Add padding to the sections */
+    max-width: 800px; /* Set maximum width for the sections */
+    margin: 20px auto; /* Center the sections horizontally and add margin */
+    background: rgba(255, 255, 255, 0.8); /* Set a semi-transparent white background for better readability */
+    border-radius: 10px; /* Add border radius for aesthetic */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+}
+
+/* Adjustments to the section title */
+.section-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 0;
+    color: #000000;/* Set text color to black */
+}
+    footer {
+        background-color: #333;
+        color: #fff;
+        padding: 5px 0;
+        text-align: center;
+    }
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
+            h2, ol {
+                padding-left: 0;
+                text-align: center;
+            }
+            nav {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>Welcome to Madan Mohan Reddy's Automation Engineering Portfolio</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a class="button" href="#" data-section-id="homeSection">Home</a></li>
+            <li><a class="button" href="#" data-section-id="aboutSection">About</a></li>
+            <li><a class="button" href="#" data-section-id="skillsSection">Skills</a></li>
+            <li><a class="button" href="#" data-section-id="contactSection">Contact</a></li>
+        </ul>
+    </nav>
+    <img src="logo.png" alt="Profile Image" class="profile-image">
+</header>
+
+<main>
+    <section id="homeSection">
+        <h2 class="section-title">Home</h2>
+        <p>Hi, I'm Madan Mohan Reddy, a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
+    </section>
+
+    <section id="aboutSection">
+        <h2 class="section-title">About Me</h2>
+        <p>Name: Madan Mohan Reddy</p>
+        <p>Designation: Senior QE Automation Engineer</p>
+        <!-- Add more details as needed -->
+    </section>
+
+    <section id="skillsSection">
+        <h2 class="section-title">Key Skills</h2>
+        <ol>
+            <li>Selenium WebDriver using Java</li>
+            <li>Selenium Grid</li>
+            <li>Cucumber Framework (BDD)</li>
+            <li>Data-Driven Framework (TDD)</li>
+            <li>TestNG Framework</li>
+            <li>JUnit</li>
+            <li>Maven</li>
+            <li>Git</li>
+            <li>SQL Server</li>
+            <li>Continuous Integration Tools (Jenkins, Bamboo)</li>
+            <li>Docker</li>
+            <li>Appium</li>
+        </ol>
+    </section>
+
+    <section id="contactSection">
+        <h2 class="section-title">Contact</h2>
+        <p>Mobile Number: +353 899679102</p>
+        <p>Email ID: mmohanreddy319@gmail.com</p>
+        <!-- Add contact form or details as needed -->
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 My Personal Website</p>
+</footer>
+
+<!-- JavaScript to toggle visibility of sections -->
+<script>
+    // Wait for the DOM content to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all sections
+        var sections = document.querySelectorAll("section");
+
+        // Hide all sections initially
+        function hideAllSections() {
+            sections.forEach(function(section) {
+                section.style.display = "none";
+            });
+        }
+
+        // Show a specific section
+        function showSection(sectionId) {
+            hideAllSections();
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = "block";
+            }
+        }
+
+        // Add click event listeners to navigation links
+        var navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function(navLink) {
+            navLink.addEventListener("click", function(event) {
+                var sectionId = navLink.getAttribute("data-section-id");
+                if (sectionId) {
+                    event.preventDefault(); // Prevent default link behavior
+                    showSection(sectionId);
+                }
+            });
+        });
+
+        // Show the default section on page load
+        showSection("homeSection");
+    });
+</script>
+
+</body>
+</html>

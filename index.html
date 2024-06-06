@@ -10,138 +10,144 @@
             margin: 0;
             padding: 0;
         }
-   body {
-    font-family: Arial, sans-serif;
-    line-height: 2;
-    color: #FFFFFF; /* Set a default text color to ensure readability */
-<!--    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Add text shadow for readability */-->
-    position: relative; /* Make the body a positioned element */
-    background: url('ai2.jpg') no-repeat center center fixed; /* Set the background image and keep it fixed */
-    background-size: auto 2000px; /* Set the background image size */
-     min-height: 100vh; /* Ensure body covers the entire viewport */
-    display: flex;
-    flex-direction: column; /* Arrange children in a column */
-    justify-content: space-between; /* Push footer to the bottom */
-}
-    header {
-    background: url('ai2.jpg') no-repeat center center fixed; /* Set the header background image and keep it fixed */
-    background-size: cover; /* Cover the entire header with the background image */
-<!--        background-color: rgba(255, 255, 255, 0.3); /* Set a more transparent white background */-->
-<!--        color: #FFFFFF;-->
-        padding: 20px 5px;
-        text-align: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        position: relative;
-        display: flex;
-        flex-direction: column; /* Arrange items in a column */
-        align-items: center; /* Center align items horizontally */
-    }
-    .profile-image {
-        margin: 10px 0; /* Add margin around the image */
-        border-radius: 50%; /* Optional: make the image circular */
-        width: 420px; /* Set a fixed width for the image */
-        height: 420px; /* Set a fixed height for the image */
-        object-fit: cover; /* Ensure the image covers the space */
-    }
-    .buttons {
-        margin-top: 10px;
-    }
-    .button {
-        margin: 0 2px; /* Reduced margin between buttons */
-        padding: 10px 24px;
-        border-radius: 20px;
-        background-color: rgba(0, 123, 255, 0.8); /* Set a semi-transparent blue background */
-        color: #FFFFFF;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-        font-size: 0.8rem;
-    }
-    .button:hover {
-        background-color: rgba(0, 86, 179, 0.8); /* Set a semi-transparent blue hover background */
-    }
-    h1 {
-        font-size: 1rem;
-        margin: 0;
-<!--        white-space: nowrap; /* Ensure the text doesn't wrap */-->
-    }
-    h2 {
-        font-size: 1rem;
-        margin: 0;
-        padding-left: 1px;
-        margin-top: 10px;
-    }
-    ol {
-        font-size: 1rem;
-        list-style-type: none;
-        padding-left: 100;
-        margin-top: 10px;
-    }
-    p {
-        margin: 2px 0 0 0;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 2;
+            color: #000000; /* Set a default text color to ensure readability */
+            position: relative; /* Make the body a positioned element */
+            display: flex;
+            flex-direction: column; /* Arrange children in a column */
+            justify-content: space-between; /* Push footer to the bottom */
+        }
+        header {
+            display: flex;
+            flex-direction: column; /* Arrange items in a column */
+            align-items: center; /* Center align items horizontally */
+            padding: 30px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: none; /* Remove the background image */
+        }
+        .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-image {
+            margin: 10px 0; /* Add margin around the image */
+            border-radius: 50%; /* Optional: make the image circular */
+            width: 820px; /* Set a fixed width for the image */
+            height: 720px; /* Set a fixed height for the image */
+            object-fit: cover; /* Ensure the image covers the space */
+        }
+        .profile-container::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('ai2.png') no-repeat center center; /* Set the background image */
+            background-size: cover; /* Cover the entire container with the background image */
+            border-radius: 100%;
+            z-index: -1; /* Place it behind the profile image */
+        }
+        .menu-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            padding: 5px;
+            background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent background */
+            border-radius: 1px;
+            color: #FFFFFF;
+            font-size: 1rem;
+            text-align: center;
+            z-index: 2; /* Ensure it's above the image */
+        }
+        .dropdown-content {
+            display: none; /* Hide the dropdown content initially */
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9); /* Set a semi-transparent white background */
+            max-width: 220px; /* Set maximum width to match the profile image */
+            width: 100%;
+<!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */-->
+            z-index: 2; /* Make sure dropdown is above other content */
+            left: 70%;
+            transform: translateX(50%); /* Center the dropdown */
+            margin-top: 80px; /* Add margin at the top to appear below the menu icon */
+            border-radius: 1px;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent hover background */
+        }
+        .show {
+            display: block;
+        }
+        h1 {
+            font-size: 1rem;
+            margin: 0;
+            text-align: center;
+            padding-left: 10px; /* Add some padding to the left */
+        }
+        h2 {
+            font-size: 1rem;
+            margin: 0;
+            padding-left: 1px;
+            margin-top: 10px;
+        }
+        ol {
+            font-size: 1rem;
+            list-style-type: none;
+            padding-left: 100;
+            margin-top: 10px;
+        }
+        p {
+            margin: 2px 0 0 0;
+        }
+        main {
+            padding: 10px;
+        }
+        section {
+            color: #000000; /* Set text color to black */
+            padding: 20px; /* Add padding to the sections */
+            max-width: 800px; /* Set maximum width for the sections */
+            margin: 20px auto; /* Center the sections horizontally and add margin */
+            background: rgba(255, 255, 255, 0.8); /* Set a semi-transparent white background for better readability */
+            border-radius: 10px; /* Add border radius for aesthetic */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+        }
 
-    nav {
-        background-color: rgba(255, 255, 255, 0.3); /* Set a more transparent white background */
-        display: flex;
-        align-items: center;
-    }
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        align-items: center;
-    }
-    nav ul li {
-        margin: 0 5px; /* Reduced margin between list items */
-    }
-    nav ul li a {
-        color: #FFFFFF;
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 20px;
-        background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent background */
-        transition: background-color 0.3s ease;
-        font-size: 0.8rem;
-    }
-    nav ul li a:hover {
-        background-color: rgba(0, 86, 179, 0.8); /* Set semi-transparent hover background */
-    }
-    main {
-        padding: 10px;
-<!--         white-space: nowrap; /* Ensure the text doesn't wrap */-->
-    }
-   section {
-   color: #000000;/* Set text color to black */
-    padding: 20px; /* Add padding to the sections */
-    max-width: 800px; /* Set maximum width for the sections */
-    margin: 20px auto; /* Center the sections horizontally and add margin */
-    background: rgba(255, 255, 255, 0.8); /* Set a semi-transparent white background for better readability */
-    border-radius: 10px; /* Add border radius for aesthetic */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-}
-
-/* Adjustments to the section title */
-.section-title {
-    text-align: center;
-    font-size: 1.5rem;
-    margin-top: 0;
-    color: #000000;/* Set text color to black */
-}
-    footer {
-        background-color: #333;
-        color: #fff;
-        padding: 5px 0;
-        text-align: center;
-    }
+        /* Adjustments to the section title */
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: #000000; /* Set text color to black */
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 5px 0;
+            text-align: center;
+        }
         /* Media queries for responsiveness */
         @media screen and (max-width: 768px) {
-            h2, ol {
-                padding-left: 0;
-                text-align: center;
+            .header-content {
+                flex-direction: column;
+                align-items: center;
             }
-            nav {
-                margin-top: 20px;
-                width: 100%;
+            h1 {
                 text-align: center;
+                padding-left: 0;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -149,24 +155,26 @@
 <body>
 
 <header>
-    <div>
-        <h1>Welcome to Madan Mohan Reddy's Automation Engineering Portfolio</h1>
+    <div class="header-content">
+        <h1>Welcome to Madan Mohan Reddy's Test Automation Engineering Portfolio</h1>
     </div>
-    <nav>
-        <ul>
-            <li><a class="button" href="#" data-section-id="homeSection">Home</a></li>
-            <li><a class="button" href="#" data-section-id="aboutSection">About</a></li>
-            <li><a class="button" href="#" data-section-id="skillsSection">Skills</a></li>
-            <li><a class="button" href="#" data-section-id="contactSection">Contact</a></li>
-        </ul>
-    </nav>
-    <img src="logo.png" alt="Profile Image" class="profile-image">
+    <div class="profile-container">
+        <img src="logo.png" alt="Profile Image" class="profile-image">
+        <div class="menu-icon" onclick="toggleMenu()">☰ Menu</div>
+    </div>
+    <div class="dropdown-content" id="dropdownMenu">
+        <a href="#" data-section-id="homeSection">Home</a>
+        <a href="#" data-section-id="aboutSection">About</a>
+        <a href="#" data-section-id="skillsSection">Skills</a>
+        <a href="#" data-section-id="contactSection">Contact</a>
+        <a href="#" onclick="toggleMenu()">✖ Close</a>
+    </div>
 </header>
-
 <main>
     <section id="homeSection">
         <h2 class="section-title">Home</h2>
         <p>Hi, I'm Madan Mohan Reddy, a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
+
     </section>
 
     <section id="aboutSection">
@@ -206,7 +214,7 @@
     <p>&copy; 2024 My Personal Website</p>
 </footer>
 
-<!-- JavaScript to toggle visibility of sections -->
+<!-- JavaScript to toggle visibility of sections and menu -->
 <script>
     // Wait for the DOM content to be fully loaded
     document.addEventListener("DOMContentLoaded", function() {
@@ -230,13 +238,14 @@
         }
 
         // Add click event listeners to navigation links
-        var navLinks = document.querySelectorAll("nav a");
+        var navLinks = document.querySelectorAll(".dropdown-content a[data-section-id]");
         navLinks.forEach(function(navLink) {
             navLink.addEventListener("click", function(event) {
                 var sectionId = navLink.getAttribute("data-section-id");
                 if (sectionId) {
                     event.preventDefault(); // Prevent default link behavior
                     showSection(sectionId);
+                    document.getElementById("dropdownMenu").classList.remove("show"); // Hide the menu
                 }
             });
         });
@@ -244,6 +253,11 @@
         // Show the default section on page load
         showSection("homeSection");
     });
+
+    // Function to toggle the dropdown menu
+    function toggleMenu() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+    }
 </script>
 
 </body>
