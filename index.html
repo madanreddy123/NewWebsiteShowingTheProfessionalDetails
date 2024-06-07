@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,34 +65,26 @@
 <!--            text-align: center;-->
 <!--            z-index: 1; /* Ensure it's above the image */-->
 <!--        }-->
-    .dropdown-content {
-    display: none; /* Hide the dropdown content initially */
-    position: absolute;
-    background-color: #FFFFFF;
-    width: 100%;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
-    z-index: 1; /* Make sure dropdown is above other content */
-    right: 50%;
-    transform: translateX(50%); /* Center the dropdown */
-    margin-top: 340px; /* Add margin at the top to appear below the menu icon */
-    border-radius: 10px; /* Adjusted border-radius for smoother corners */
-}
-
-.dropdown-content a {
-    color: black; /* Set the text color to white */
-    padding: 12px 20px; /* Add padding to make it look like a button */
-    text-decoration: none; /* Remove underline */
-    display: block; /* Make the link a block element */
-    text-align: center; /* Center the text */
-    background-color: #007BFF; /* Set background color */
-    margin: 5px 0; /* Add margin between buttons */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-.dropdown-content a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
+        .dropdown-content {
+            display: flex; /* Hide the dropdown content initially */
+            position: absolute;
+            background-color:#FFFFFF;
+<!--            max-width: 100px; /* Set maximum width to match the profile image */-->
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+            z-index: 1; /* Make sure dropdown is above other content */
+            right: 50%;
+            transform: translateX(50%); /* Center the dropdown */
+            margin-top: 340px; /* Add margin at the top to appear below the menu icon */
+            border-radius: 0.5px;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
         .dropdown-content a:hover {
             background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent hover background */
         }
@@ -269,4 +261,4 @@
 </script>
 
 </body>
-</html>
+</html> 
