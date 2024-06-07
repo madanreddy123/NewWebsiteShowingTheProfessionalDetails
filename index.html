@@ -53,27 +53,34 @@
         }
 
         .dropdown-content {
-            display: flex; /* Hide the dropdown content initially */
+            display: none; /* Hide the dropdown content initially */
             position: absolute;
-            background-color:#FFFFFF;
-            width:40;
+            background-color: #FFFFFF;
+            width: 200px; /* Set a fixed width for the dropdown */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
             z-index: 1; /* Make sure dropdown is above other content */
-            right: 10%;
+            right: 50%;
             transform: translateX(50%); /* Center the dropdown */
             margin-top: 320px; /* Add margin at the top to appear below the menu icon */
-            border-radius: 1.5px;
+            border-radius: 10px; /* Adjusted border-radius for smoother corners */
+            padding: 10px 0; /* Add padding to the dropdown */
         }
         .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: none;
-            text-align: centre;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 12px 20px; /* Add padding to make it look like a button */
+            text-decoration: none; /* Remove underline */
+            display: block; /* Make the link a block element */
+            text-align: center; /* Center the text */
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Gradient background */
+            margin: 5px 10px; /* Add margin between buttons */
+            border-radius: 5px; /* Rounded corners */
+            transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
         }
         .dropdown-content a:hover {
-            background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent hover background */
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%); /* Reverse gradient on hover */
+            transform: translateY(-2px); /* Lift the button slightly on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
         }
         .show {
             display: block;
@@ -196,8 +203,9 @@
 </main>
 
 <footer>
-    <p>&copy; 2024 My Personal Website</p>
-</footer>
+    <p>&copy; 2024 My Personal Website</p
+        </footer>
+    
 
 <!-- JavaScript to toggle visibility of sections and menu -->
 <script>
