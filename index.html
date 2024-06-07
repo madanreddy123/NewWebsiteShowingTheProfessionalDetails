@@ -52,38 +52,25 @@
             z-index: -1; /* Place it behind the profile image */
         }
 
-        .dropdown-content {
-            display: none; /* Hide the dropdown content initially */
-            position: absolute;
-            background-color: #FFFFFF;
-            width: 200px; /* Set a fixed width for the dropdown */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
-            z-index: 1; /* Make sure dropdown is above other content */
-            right: 50%;
-            transform: translateX(50%); /* Center the dropdown */
-            margin-top: 320px; /* Add margin at the top to appear below the menu icon */
-            border-radius: 10px; /* Adjusted border-radius for smoother corners */
-            padding: 10px 0; /* Add padding to the dropdown */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-        .dropdown-content a {
-            color: #fff;
-            padding: 12px 20px; /* Add padding to make it look like a button */
-            text-decoration: none; /* Remove underline */
-            display: block; /* Make the link a block element */
-            text-align: center; /* Center the text */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Gradient background */
-            margin: 5px 10px; /* Add margin between buttons */
-            border-radius: 5px; /* Rounded corners */
-            transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+        .nav-buttons button {
+            background-color: #007BFF;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
-        .dropdown-content a:hover {
-            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%); /* Reverse gradient on hover */
-            transform: translateY(-2px); /* Lift the button slightly on hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
-        }
-        .show {
-            display: block;
+        .nav-buttons button:hover {
+            background-color: #0056b3;
         }
         h1 {
             font-size: 1rem;
@@ -143,6 +130,12 @@
                 padding-left: 0;
                 margin-bottom: 10px;
             }
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .nav-buttons button {
+                margin: 5px 0;
+            }
         }
     </style>
 </head>
@@ -155,18 +148,17 @@
     <div class="profile-container">
         <img src="logo.png" alt="Profile Image" class="profile-image">
     </div>
-    <div class="dropdown-content" id="dropdownMenu">
-        <a href="#" data-section-id="homeSection">Home</a>
-        <a href="#" data-section-id="aboutSection">About</a>
-        <a href="#" data-section-id="skillsSection">Skills</a>
-        <a href="#" data-section-id="contactSection">Contact</a>
+    <div class="nav-buttons">
+        <button onclick="showSection('homeSection')">Home</button>
+        <button onclick="showSection('aboutSection')">About</button>
+        <button onclick="showSection('skillsSection')">Skills</button>
+        <button onclick="showSection('contactSection')">Contact</button>
     </div>
 </header>
 <main>
     <section id="homeSection">
         <h2 class="section-title">Home</h2>
-        <p>Hi, I'm Madan Mohan Reddy, a Senior Qe Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
-
+        <p>Hi, I'm Madan Mohan Reddy, a Senior QE Automation Engineer at Sogeti, Ireland. My specialization lies in automation frameworks for both UI and Restassured automation. Over the years, I've developed, enhanced, and maintained automation frameworks using Selenium with Java and Cucumber with TestNG. Additionally, I have extensive knowledge and exposure to Appium for mobile automation, particularly Android. I also serve as a Subject Matter Expert for automation frameworks in my current client project. Currently, I'm working on running the automation build on OpenShift Pods and the remote desktop to reduce execution time using Selenium grid. Lastly, I prioritize staying updated on the latest tools, technologies, and methodologies in the field of test automation.</p>
     </section>
 
     <section id="aboutSection">
@@ -203,55 +195,33 @@
 </main>
 
 <footer>
-    <p>&copy; 2024 My Personal Website</p
-        </footer>
-    
+    <p>&copy; 2024 My Personal Website</p>
+</footer>
 
-<!-- JavaScript to toggle visibility of sections and menu -->
+<!-- JavaScript to toggle visibility of sections -->
 <script>
-    // Wait for the DOM content to be fully loaded
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get all sections
+    // Function to hide all sections
+    function hideAllSections() {
         var sections = document.querySelectorAll("section");
-
-        // Hide all sections initially
-        function hideAllSections() {
-            sections.forEach(function(section) {
-                section.style.display = "none";
-            });
-        }
-
-        // Show a specific section
-        function showSection(sectionId) {
-            hideAllSections();
-            var section = document.getElementById(sectionId);
-            if (section) {
-                section.style.display = "block";
-            }
-        }
-
-        // Add click event listeners to navigation links
-        var navLinks = document.querySelectorAll(".dropdown-content a[data-section-id]");
-        navLinks.forEach(function(navLink) {
-            navLink.addEventListener("click", function(event) {
-                var sectionId = navLink.getAttribute("data-section-id");
-                if (sectionId) {
-                    event.preventDefault(); // Prevent default link behavior
-                    showSection(sectionId);
-                    document.getElementById("dropdownMenu").classList.remove("show"); // Hide the menu
-                }
-            });
+        sections.forEach(function(section) {
+            section.style.display = "none";
         });
+    }
 
-        // Show the default section on page load
+    // Function to show a specific section
+    function showSection(sectionId) {
+        hideAllSections();
+        var section = document.getElementById(sectionId);
+        if (section) {
+            section.style.display = "block";
+        }
+    }
+
+    // Show the default section on page load
+    document.addEventListener("DOMContentLoaded", function() {
         showSection("homeSection");
     });
-
-    // Function to toggle the dropdown menu
-    //function toggleMenu() {
-        //document.getElementById("dropdownMenu").classList.toggle("show");
-    //}
 </script>
 
 </body>
-</html> 
+</html>
