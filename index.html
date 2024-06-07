@@ -34,7 +34,6 @@
         }
         .profile-image {
             margin: 0px 0; /* Add margin around the image */
-<!--            border-radius: 50%; /* Optional: make the image circular */-->
             width: 380px; /* Set a fixed width for the image */
             height: 299px; /* Set a fixed height for the image */
             object-fit: cover; /* Ensure the image covers the space */
@@ -52,24 +51,11 @@
             border-radius: 1%;
             z-index: -1; /* Place it behind the profile image */
         }
-<!--        .menu-icon {-->
-<!--            position: absolute;-->
-<!--            top: 5px;-->
-<!--            left: 300px;-->
-<!--            cursor: pointer;-->
-<!--            padding: 2px;-->
-<!--            background-color: rgba(0, 123, 255, 0.8); /* Set semi-transparent background */-->
-<!--            border-radius: 1px;-->
-<!--            color: #FFFFFF;-->
-<!--            font-size: 0.8rem;-->
-<!--            text-align: center;-->
-<!--            z-index: 1; /* Ensure it's above the image */-->
-<!--        }-->
+
         .dropdown-content {
             display: flex; /* Hide the dropdown content initially */
             position: absolute;
             background-color:#FFFFFF;
-<!--            max-width: 100px; /* Set maximum width to match the profile image */-->
             width: 100%;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
             z-index: 1; /* Make sure dropdown is above other content */
@@ -161,14 +147,12 @@
     </div>
     <div class="profile-container">
         <img src="logo.png" alt="Profile Image" class="profile-image">
-        <div class="menu-icon" onclick="toggleMenu()">☰ Menu</div>
     </div>
     <div class="dropdown-content" id="dropdownMenu">
         <a href="#" data-section-id="homeSection">Home</a>
         <a href="#" data-section-id="aboutSection">About</a>
         <a href="#" data-section-id="skillsSection">Skills</a>
         <a href="#" data-section-id="contactSection">Contact</a>
-<!--        <a href="#" onclick="toggleMenu()">✖ Close</a>-->
     </div>
 </header>
 <main>
