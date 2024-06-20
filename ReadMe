@@ -25,3 +25,7 @@ Collaboration and Communication: Improved collaboration with development and ope
 OpenShift Automation Builds: Successfully executed the automation build of OpenShift applications, streamlining the deployment and testing process in the cloud environment.
 
 Selenium Grid Proposal: Submitted a proposal to the EAG, reviewed by Susan Thomas, for setting up the Selenium Grid on OpenShift pods, aiming to enhance distributed test execution capabilities.
+
+Runtime Test Data Management: Managed the test data created at runtime during the execution of the automation build, ensuring data integrity and consistency throughout the testing process.
+
+Skill Development: Facilitated training sessions and workshops, increasing the automation skills and capabilities of the team.
