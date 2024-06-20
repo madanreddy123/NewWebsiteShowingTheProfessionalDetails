@@ -11,3 +11,17 @@ docker run -d -p 8080:80 --name MyWebsite personnel
 open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
+
+
+
+
+
+Framework Enhancements: Developed and implemented enhancements to the automation framework, making it more scalable and maintainable.
+
+Cross-Platform Testing: Implemented cross-platform testing capabilities, ensuring the application works seamlessly across different environments.
+
+Collaboration and Communication: Improved collaboration with development and operations teams, fostering a more integrated and efficient workflow.
+
+OpenShift Automation Builds: Successfully executed the automation build of OpenShift applications, streamlining the deployment and testing process in the cloud environment.
+
+Selenium Grid Proposal: Submitted a proposal to the EAG, reviewed by Susan Thomas, for setting up the Selenium Grid on OpenShift pods, aiming to enhance distributed test execution capabilities.
