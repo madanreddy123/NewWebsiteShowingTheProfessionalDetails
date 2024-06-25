@@ -11,3 +11,24 @@ docker run -d -p 8080:80 --name MyWebsite personnel
 open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
+
+
+
+
+
+
+
+DETAIL & CRITERIA (Pre)	EVALUATION (Post)
+Feature/Function 1: Selenium Grid setup on Remote Desktop	Success/Fail: Success <br> Details: The Selenium Grid was successfully deployed on OpenShift pods, providing the same functionality as the Remote Desktop setup.
+Feature/Function 2: Test execution capability	Success/Fail: Success <br> Details: Test executions were carried out without issues, maintaining the same performance and reliability as the previous setup.
+Feature/Function 3: Resource management and scaling	Success/Fail: Success <br> Details: Resource management and scaling improved with OpenShift's orchestration capabilities, leading to more efficient use of resources.
+Use Case 2: Can the proposed tool/product/technology integrate with the existing process/scheme (Selenium Grid functionality) on OpenShift?
+DETAIL & CRITERIA (Pre)	EVALUATION (Post)
+Feature/Function 1: Compatibility with existing test scripts	Success/Fail: Success <br> Details: Existing test scripts were fully compatible with the new OpenShift setup without modifications.
+Feature/Function 2: Network integration	Success/Fail: Success <br> Details: Network integration was seamless, with no disruptions in test communication.
+Feature/Function 3: Data storage and retrieval	Success/Fail: Success <br> Details: Data storage and retrieval were efficient, leveraging OpenShift's persistent storage capabilities.
+Use Case 3: Can the proposed tool/product/technology complete the process (test execution) within the desired timeframe (performance) on OpenShift?
+DETAIL & CRITERIA (Pre)	EVALUATION (Post)
+Feature/Function 1: Execution speed	Success/Fail: Success <br> Details: Execution speed was consistent with or better than the previous setup on Remote Desktop.
+Feature/Function 2: Scalability during peak loads	Success/Fail: Success <br> Details: The system scaled effectively during peak loads, maintaining performance.
+Feature/Function 3: Consistency and reliability of test results	Success/Fail: Success <br> Details: Test results were consistent and reliable, ensuring trust in the testing process.
