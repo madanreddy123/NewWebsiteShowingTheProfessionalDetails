@@ -13,22 +13,57 @@ open this link
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-Completed Use Case Evaluation Table
-Use Case 1: Can the proposed technology (OpenShift pods) replace the existing process (Selenium Grid on Remote Desktop)?
-DETAIL & CRITERIA (Pre)
-Feature/Function 1: Selenium Grid setup on Remote Desktop
-Feature/Function 2: Test execution capability
-Feature/Function 3: Resource management and scaling
-Use Case 2: Can the proposed tool/product/technology integrate with the existing process/scheme (Selenium Grid functionality) on OpenShift?
-DETAIL & CRITERIA (Pre)
-Feature/Function 1: Compatibility with existing test scripts
-Feature/Function 2: Network integration
-Feature/Function 3: Data storage and retrieval
-Use Case 3: Can the proposed tool/product/technology complete the process (test execution) within the desired timeframe (performance) on OpenShift?
-DETAIL & CRITERIA (Pre)
-Feature/Function 1: Execution speed
-Feature/Function 2: Scalability during peak loads
-Feature/Function 3: Consistency and reliability of test results
+public class ConfigUtility {
 
-Use Case Hypothesis (Pre)1: Can the proposed technology (OpenShift pods) replace the existing process (Selenium Grid on Remote Desktop)?2: Can the proposed tool/product/technology integrate with the existing process/scheme (Selenium Grid functionality) on OpenShift?3: Can the proposed tool/product/technology complete the process (test execution) within the desired timeframe (performance) on OpenShift?4: Can the proposed tool/product/technology improve the resource utilization compared to the current process?5: Can the proposed tool/product/technology enhance the scalability and flexibility of the Selenium Grid setup on OpenShift pods?Detail & Criteria (Pre)For Use Case 1:Feature/Function 1: Selenium Grid setup on OpenShift PodsFeature/Function 2: Test execution capabilityFeature/Function 3: Resource management and scalingFor Use Case 2:Feature/Function 1: Compatibility with existing test scriptsFeature/Function 2: Network integrationFeature/Function 3: Data storage and retrievalFor Use Case 3:Feature/Function 1: Execution speedFeature/Function 2: Scalability during peak loadsFeature/Function 3: Consistency and reliability of test resultsFor Use Case 4:Feature/Function 1: Measurement of CPU and memory usageFeature/Function 2: Comparison of resource utilization between OpenShift and Remote DesktopFeature/Function 3: Efficiency improvements in resource allocationFor Use Case 5:Feature/Function 1: Ability to scale up/down Selenium Grid nodes quicklyFeature/Function 2: Flexibility in configuring Selenium Grid nodesFeature/Function 3: Impact on overall system performance during scalingEvaluation (Post)For each feature/function under each use case, the evaluation should detail:Success/Fail, Details
+    private Map<String, String> keyValueMap = new HashMap<>();
+
+    // Constructor that loads the configuration from the file
+    public ConfigUtility(String filePath) {
+        loadConfig(filePath);
+    }
+
+    // Method to load key-value pairs from the file
+    private void loadConfig(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("=", 2);
+                if (parts.length >= 2) {
+                    String key = parts[0].trim();
+                    String value = parts[1].trim();
+                    keyValueMap.put(key, value);
+                } else {
+                    System.out.println("Ignoring malformed line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to get the value assigned to a specific key
+    public String getValue(String key) {
+        return keyValueMap.get(key);
+    }
+
+    // Main method for testing purposes
+    public static void main(String[] args) {
+        ConfigUtility configUtility = new ConfigUtility("config.txt");
+        
+        // Test retrieving values for specific keys
+        String value1 = configUtility.getValue("key1");
+        System.out.println("Value for key1: " + value1);
+        
+        String value2 = configUtility.getValue("key2");
+        System.out.println("Value for key2: " + value2);
+        
+        String value3 = configUtility.getValue("key3");
+        System.out.println("Value for key3: " + value3);
+    }
+}
