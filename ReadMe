@@ -74,3 +74,55 @@ public class CucumberHooks {
         return driver;
     }
 }
+
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
+
+import com.konghq.unirest.http.HttpResponse;
+import com.konghq.unirest.http.Unirest;
+
+public class GenericZephyrUtility {
+
+    public static void main(String[] args) throws URISyntaxException, IllegalStateException, IOException {
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("config.properties")) {
+            prop.load(input);
+        }
+
+        String zephyrBaseUrl = prop.getProperty("zephyrBaseUrl");
+        String accessKey = prop.getProperty("accessKey");
+        String secretKey = prop.getProperty("secretKey");
+        String accountId = prop.getProperty("accountId");
+
+        ZFJCloudRestClient client = ZFJCloudRestClient.restBuilder(zephyrBaseUrl, accessKey, secretKey, accountId).build();
+        JwtGenerator jwtGenerator = client.getJwtGenerator();
+
+        // API to which the JWT token has to be generated
+        String createCycleUri = zephyrBaseUrl + "/public/rest/api/1.0/cycle?expand=&clonedCycleId=";
+
+        URI uri = new URI(createCycleUri);
+        int expirationInSec = 360;
+        String jwt = jwtGenerator.generateJWT("GET", uri, expirationInSec);
+
+        // Print the URL and JWT token to be used for making the REST call
+        System.out.println("FINAL API : " + uri.toString());
+        System.out.println("JWT Token : " + jwt);
+
+        // Example: Making an actual REST call using the generated JWT token
+        HttpResponse<String> response = Unirest.get(uri.toString())
+                .header("Authorization", "Bearer " + jwt)
+                .header("zapiAccessKey", accessKey)
+                .asString();
+
+        if (response.getStatus() == 200) {
+            System.out.println("Response: " + response.getBody());
+        } else {
+            System.out.println("Failed to get response: " + response.getStatus() + " " + response.getStatusText());
+        }
+    }
+}
