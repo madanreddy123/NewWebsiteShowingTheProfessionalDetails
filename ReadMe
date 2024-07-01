@@ -12,3 +12,65 @@ open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.Map;
+
+public class CucumberHooks {
+    private WebDriver driver;
+    private JiraZephyrUtility jiraUtil;
+    private Map<String, String> testCaseIdsAndKeys;
+
+    public CucumberHooks() {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        jiraUtil = new JiraZephyrUtility(
+            "https://your-jira-instance.atlassian.net",
+            "https://your-zephyr-instance",
+            "your-email@example.com",
+            "your-jira-api-token"
+        );
+    }
+
+    @Before
+    public void setUp(Scenario scenario) throws Exception {
+        driver = new ChromeDriver();
+
+        // Extract tags from the scenario
+        String[] cucumberTags = scenario.getSourceTagNames().toArray(new String[0]);
+        testCaseIdsAndKeys = jiraUtil.getTestCaseIdsAndKeys(cucumberTags);
+    }
+
+    @After
+    public void tearDown(Scenario scenario) throws Exception {
+        String projectKey = "PROJECT_KEY";  // Replace with your project key
+        String cycleName = "CYCLE_NAME";  // Replace with your cycle name
+        String versionName = "VERSION_NAME";  // Replace with your version name
+
+        String projectId = jiraUtil.getProjectId(projectKey);
+        String versionId = jiraUtil.getVersionId(projectId, versionName);
+        String cycleId = jiraUtil.getCycleId(cycleName, projectId, versionId);
+
+        for (Map.Entry<String, String> entry : testCaseIdsAndKeys.entrySet()) {
+            String issueKey = entry.getKey();
+            String issueId = entry.getValue();
+
+            String executionId = jiraUtil.createExecution(projectId, cycleId, issueId, versionId);
+
+            // Set status based on the scenario result
+            int status = scenario.isFailed() ? 2 : 1;  // 1 = PASS, 2 = FAIL
+            jiraUtil.updateExecutionStatus(executionId, status);
+        }
+
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+}
