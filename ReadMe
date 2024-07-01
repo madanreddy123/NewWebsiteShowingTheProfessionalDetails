@@ -12,117 +12,108 @@ open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
+     import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
-public class CucumberHooks {
-    private WebDriver driver;
-    private JiraZephyrUtility jiraUtil;
-    private Map<String, String> testCaseIdsAndKeys;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
-    public CucumberHooks() {
-        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-        jiraUtil = new JiraZephyrUtility(
-            "https://your-jira-instance.atlassian.net",
-            "https://your-zephyr-instance",
-            "your-email@example.com",
-            "your-jira-api-token"
-        );
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class ZephyrIntegration {
+
+    private final String baseUrl;
+    private final String username;
+    private final String apiToken;
+    private final String accessKey;
+    private final String auth;
+
+    private static final Map<String, String> TAG_TO_ZEPHYR_STATUS = new HashMap<>();
+    static {
+        TAG_TO_ZEPHYR_STATUS.put("status-pass", "1"); // Zephyr status code for Pass
+        TAG_TO_ZEPHYR_STATUS.put("status-fail", "2"); // Zephyr status code for Fail
+        TAG_TO_ZEPHYR_STATUS.put("status-wip", "3");  // Zephyr status code for Work in Progress
+        TAG_TO_ZEPHYR_STATUS.put("status-blocked", "4"); // Zephyr status code for Blocked
     }
 
-    @Before
-    public void setUp(Scenario scenario) throws Exception {
-        driver = new ChromeDriver();
-
-        // Extract tags from the scenario
-        String[] cucumberTags = scenario.getSourceTagNames().toArray(new String[0]);
-        testCaseIdsAndKeys = jiraUtil.getTestCaseIdsAndKeys(cucumberTags);
+    public ZephyrIntegration(String baseUrl, String username, String apiToken, String accessKey) {
+        this.baseUrl = baseUrl;
+        this.username = username;
+        this.apiToken = apiToken;
+        this.accessKey = accessKey;
+        this.auth = Base64.getEncoder().encodeToString((username + ":" + apiToken).getBytes());
     }
 
-    @After
-    public void tearDown(Scenario scenario) throws Exception {
-        String projectKey = "PROJECT_KEY";  // Replace with your project key
-        String cycleName = "CYCLE_NAME";  // Replace with your cycle name
-        String versionName = "VERSION_NAME";  // Replace with your version name
+    public void updateTestResults(String jsonReportPath) throws IOException {
+        File jsonReport = new File(jsonReportPath);
+        String json = new String(Files.readAllBytes(jsonReport.toPath()));
 
-        String projectId = jiraUtil.getProjectId(projectKey);
-        String versionId = jiraUtil.getVersionId(projectId, versionName);
-        String cycleId = jiraUtil.getCycleId(cycleName, projectId, versionId);
+        // Parse JSON and update Zephyr
+        updateTestResultsInZephyr(json);
+    }
 
-        for (Map.Entry<String, String> entry : testCaseIdsAndKeys.entrySet()) {
-            String issueKey = entry.getKey();
-            String issueId = entry.getValue();
+    private void updateTestResultsInZephyr(String json) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(json);
 
-            String executionId = jiraUtil.createExecution(projectId, cycleId, issueId, versionId);
+        for (JsonNode featureNode : rootNode) {
+            for (JsonNode elementNode : featureNode.path("elements")) {
+                String testCaseKey = null;
+                String status = null;
 
-            // Set status based on the scenario result
-            int status = scenario.isFailed() ? 2 : 1;  // 1 = PASS, 2 = FAIL
-            jiraUtil.updateExecutionStatus(executionId, status);
+                for (JsonNode tagNode : elementNode.path("tags")) {
+                    String tagName = tagNode.path("name").asText();
+                    if (tagName.startsWith("@zephyr-test-id-")) {
+                        testCaseKey = tagName.replace("@zephyr-test-id-", "");
+                    } else if (TAG_TO_ZEPHYR_STATUS.containsKey(tagName)) {
+                        status = TAG_TO_ZEPHYR_STATUS.get(tagName);
+                    }
+                }
+
+                if (testCaseKey != null && status != null) {
+                    updateZephyrExecutionStatus(testCaseKey, status);
+                }
+            }
         }
-
-        if (driver != null) {
-            driver.quit();
-        }
     }
 
-    public WebDriver getDriver() {
-        return driver;
+    private void updateZephyrExecutionStatus(String testCaseKey, String status) throws IOException {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost request = new HttpPost(baseUrl + "rest/zapi/latest/execution");
+        request.setHeader("Authorization", "Basic " + auth);
+        request.setHeader("Content-Type", "application/json");
+        request.setHeader("zapiAccessKey", accessKey);
+
+        String jsonPayload = String.format("{\"status\": \"%s\", \"testCaseKey\": \"%s\"}", status, testCaseKey);
+        StringEntity params = new StringEntity(jsonPayload);
+        request.setEntity(params);
+
+        CloseableHttpResponse response = httpClient.execute(request);
+        System.out.println(EntityUtils.toString(response.getEntity()));
     }
-}
 
+    public static void main(String[] args) {
+        try {
+            String baseUrl = "https://dafm-gov-ie.atlassian.net/";
+            String username = "your_username";
+            String apiToken = "your_api_token";
+            String accessKey = "your_access_key";
+            String jsonReportPath = "target/cucumber-reports/Cucumber.json";
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Properties;
+            ZephyrIntegration zephyrIntegration = new ZephyrIntegration(baseUrl, username, apiToken, accessKey);
+            zephyrIntegration.updateTestResults(jsonReportPath);
 
-import com.konghq.unirest.http.HttpResponse;
-import com.konghq.unirest.http.Unirest;
-
-public class GenericZephyrUtility {
-
-    public static void main(String[] args) throws URISyntaxException, IllegalStateException, IOException {
-        Properties prop = new Properties();
-        try (InputStream input = new FileInputStream("config.properties")) {
-            prop.load(input);
-        }
-
-        String zephyrBaseUrl = prop.getProperty("zephyrBaseUrl");
-        String accessKey = prop.getProperty("accessKey");
-        String secretKey = prop.getProperty("secretKey");
-        String accountId = prop.getProperty("accountId");
-
-        ZFJCloudRestClient client = ZFJCloudRestClient.restBuilder(zephyrBaseUrl, accessKey, secretKey, accountId).build();
-        JwtGenerator jwtGenerator = client.getJwtGenerator();
-
-        // API to which the JWT token has to be generated
-        String createCycleUri = zephyrBaseUrl + "/public/rest/api/1.0/cycle?expand=&clonedCycleId=";
-
-        URI uri = new URI(createCycleUri);
-        int expirationInSec = 360;
-        String jwt = jwtGenerator.generateJWT("GET", uri, expirationInSec);
-
-        // Print the URL and JWT token to be used for making the REST call
-        System.out.println("FINAL API : " + uri.toString());
-        System.out.println("JWT Token : " + jwt);
-
-        // Example: Making an actual REST call using the generated JWT token
-        HttpResponse<String> response = Unirest.get(uri.toString())
-                .header("Authorization", "Bearer " + jwt)
-                .header("zapiAccessKey", accessKey)
-                .asString();
-
-        if (response.getStatus() == 200) {
-            System.out.println("Response: " + response.getBody());
-        } else {
-            System.out.println("Failed to get response: " + response.getStatus() + " " + response.getStatusText());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
