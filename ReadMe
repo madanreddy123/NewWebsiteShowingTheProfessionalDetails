@@ -117,3 +117,154 @@ public class ZephyrIntegration {
         }
     }
 }
+
+
+To make the provided script generic, we'll need to parameterize the various constants like `zephyrBaseUrl`, `accessKey`, `secretKey`, and `accountId` so they can be passed as arguments or read from a configuration file or environment variables. This will allow the script to be reused with different configurations without modifying the code.
+
+### Updated Script
+
+Below is the updated version of the script that uses environment variables to make it generic:
+
+```java
+import com.konghq.unirest.http.HttpResponse;
+import com.konghq.unirest.http.Unirest;
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class GenericZephyrUtility {
+
+    public static void main(String[] args) throws URISyntaxException, IllegalStateException, IOException {
+        // Replace Zephyr BaseUrl with the <ZAPI_CLOUD_URL> shared with ZAPI Cloud Installation
+        String zephyrBaseUrl = System.getenv("ZEPHYR_BASE_URL");
+        String accessKey = System.getenv("ZEPHYR_ACCESS_KEY"); // we can get from Addons -> API keys section
+        String secretKey = System.getenv("ZEPHYR_SECRET_KEY"); // we can get from Addons -> API keys section
+        String accountId = System.getenv("ZEPHYR_ACCOUNT_ID"); // accountId can be found in ZAPI Cloud section
+
+        ZFJCloudRestClient client = ZFJCloudRestClient.restBuilder(zephyrBaseUrl, accessKey, secretKey, accountId).build();
+        JwtGenerator jwtGenerator = client.getJwtGenerator();
+
+        // API to which the JWT token has to be generated
+        String createCycleUri = zephyrBaseUrl + "/public/rest/api/1.0/cycle?expand=&clonedCycleId=";
+
+        URI uri = new URI(createCycleUri);
+        int expirationInSec = 360;
+        String jwt = jwtGenerator.generateJWT("GET", uri, expirationInSec);
+
+        // Print the URL and JWT token to be used for making the REST call
+        System.out.println("FINAL API : " + uri.toString());
+        System.out.println("JWT Token : " + jwt);
+
+        // Example: Making an actual REST call using the generated JWT token
+        HttpResponse<String> response = Unirest.get(uri.toString())
+                .header("Authorization", "Bearer " + jwt)
+                .header("zapiAccessKey", accessKey)
+                .asString();
+
+        if (response.getStatus() == 200) {
+            System.out.println("Response: " + response.getBody());
+        } else {
+            System.out.println("Failed to get response: " + response.getStatus() + " " + response.getStatusText());
+        }
+    }
+}
+```
+
+### Setting Environment Variables
+
+To run the script, you'll need to set the environment variables. Here is how you can do it in different operating systems:
+
+#### On Windows
+
+1. Open a Command Prompt or PowerShell.
+2. Run the following commands:
+
+```cmd
+setx ZEPHYR_BASE_URL "https://your-zephyr-instance"
+setx ZEPHYR_ACCESS_KEY "your-access-key"
+setx ZEPHYR_SECRET_KEY "your-secret-key"
+setx ZEPHYR_ACCOUNT_ID "your-account-id"
+```
+
+#### On macOS/Linux
+
+1. Open a terminal.
+2. Run the following commands:
+
+```bash
+export ZEPHYR_BASE_URL="https://your-zephyr-instance"
+export ZEPHYR_ACCESS_KEY="your-access-key"
+export ZEPHYR_SECRET_KEY="your-secret-key"
+export ZEPHYR_ACCOUNT_ID="your-account-id"
+```
+
+### Using a Configuration File
+
+Alternatively, you can use a configuration file (e.g., `config.properties`) to store these values and read them in your Java code.
+
+### config.properties Example
+
+```properties
+zephyrBaseUrl=https://your-zephyr-instance
+accessKey=your-access-key
+secretKey=your-secret-key
+accountId=your-account-id
+```
+
+### Updated Script to Read from config.properties
+
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
+
+import com.konghq.unirest.http.HttpResponse;
+import com.konghq.unirest.http.Unirest;
+
+public class GenericZephyrUtility {
+
+    public static void main(String[] args) throws URISyntaxException, IllegalStateException, IOException {
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("config.properties")) {
+            prop.load(input);
+        }
+
+        String zephyrBaseUrl = prop.getProperty("zephyrBaseUrl");
+        String accessKey = prop.getProperty("accessKey");
+        String secretKey = prop.getProperty("secretKey");
+        String accountId = prop.getProperty("accountId");
+
+        ZFJCloudRestClient client = ZFJCloudRestClient.restBuilder(zephyrBaseUrl, accessKey, secretKey, accountId).build();
+        JwtGenerator jwtGenerator = client.getJwtGenerator();
+
+        // API to which the JWT token has to be generated
+        String createCycleUri = zephyrBaseUrl + "/public/rest/api/1.0/cycle?expand=&clonedCycleId=";
+
+        URI uri = new URI(createCycleUri);
+        int expirationInSec = 360;
+        String jwt = jwtGenerator.generateJWT("GET", uri, expirationInSec);
+
+        // Print the URL and JWT token to be used for making the REST call
+        System.out.println("FINAL API : " + uri.toString());
+        System.out.println("JWT Token : " + jwt);
+
+        // Example: Making an actual REST call using the generated JWT token
+        HttpResponse<String> response = Unirest.get(uri.toString())
+                .header("Authorization", "Bearer " + jwt)
+                .header("zapiAccessKey", accessKey)
+                .asString();
+
+        if (response.getStatus() == 200) {
+            System.out.println("Response: " + response.getBody());
+        } else {
+            System.out.println("Failed to get response: " + response.getStatus() + " " + response.getStatusText());
+        }
+    }
+}
+```
+
+By making these changes, the script becomes generic and reusable across different environments or configurations.
