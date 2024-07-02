@@ -12,7 +12,9 @@ open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
 
-    
+    for (String macAlgorithm : Security.getAlgorithms("Mac")) {
+            System.out.println(macAlgorithm);
+        }
 
 
 
