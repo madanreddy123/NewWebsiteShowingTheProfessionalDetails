@@ -100,7 +100,11 @@ public class ZephyrIntegration {
         String payload = String.format("{\"iss\":\"%s\",\"iat\":%d,\"exp\":%d,\"qsh\":\"%s\"}", ACCESS_KEY, now, expiration, qsh);
 
         Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(Base64.getDecoder().decode(SECRET_KEY), "HmacSHA256");
+
+        // Handle URL-safe Base64 if necessary
+        String correctedSecretKey = SECRET_KEY.replace('-', '+').replace('_', '/');
+        byte[] decodedKey = Base64.getDecoder().decode(correctedSecretKey);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(decodedKey, "HmacSHA256");
         mac.init(secretKeySpec);
 
         String signature = Base64.getUrlEncoder().encodeToString(mac.doFinal(payload.getBytes(StandardCharsets.UTF_8)));
