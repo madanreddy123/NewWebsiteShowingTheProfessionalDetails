@@ -162,3 +162,80 @@ public class ZephyrIntegration1 {
 
 }
 
+
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.Base64;
+
+public class JiraIntegration {
+
+    private static final String JIRA_BASE_URL = "https://your-jira-server.com";
+    private static final String API_TOKEN = "your_api_token";
+    private static final String PROJECT_KEY = "your_project_key";
+    private static final String TEST_CYCLE_KEY = "your_test_cycle_key";
+    private static final String ISSUE_KEY = "your_test_case_key";
+
+    public static void main(String[] args) {
+        String executionId = createTestExecution(ISSUE_KEY, TEST_CYCLE_KEY);
+        updateTestExecutionStatus(executionId, "PASS");
+    }
+
+    public static String createTestExecution(String issueKey, String cycleId) {
+        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue";
+        String jsonPayload = String.format("{\"fields\": {\"project\": {\"key\": \"%s\"}, \"summary\": \"Test Execution\", \"issuetype\": {\"name\": \"Test Execution\"}}}", PROJECT_KEY);
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost request = new HttpPost(apiUrl);
+            request.setHeader("Content-Type", "application/json");
+            String auth = "your_username:" + API_TOKEN;
+            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
+            String authHeader = "Basic " + new String(encodedAuth);
+            request.setHeader("Authorization", authHeader);
+            request.setEntity(new StringEntity(jsonPayload));
+
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                String responseString = EntityUtils.toString(response.getEntity());
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode jsonNode = mapper.readTree(responseString);
+                String executionId = jsonNode.get("id").asText();
+                return executionId;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void updateTestExecutionStatus(String executionId, String status) {
+        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue/" + executionId + "/transitions";
+        String jsonPayload = String.format("{\"transition\": {\"id\": \"%s\"}}", status.equals("PASS") ? "31" : "41"); // Example transition IDs
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost request = new HttpPost(apiUrl);
+            request.setHeader("Content-Type", "application/json");
+            String auth = "your_username:" + API_TOKEN;
+            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
+            String authHeader = "Basic " + new String(encodedAuth);
+            request.setHeader("Authorization", authHeader);
+            request.setEntity(new StringEntity(jsonPayload));
+
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                String responseString = EntityUtils.toString(response.getEntity());
+                System.out.println("Response: " + responseString);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
