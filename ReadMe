@@ -225,34 +225,18 @@ public class StepDefinitions {
     }
 }
 
+Subject: Clarification on Zephyr Jira Integration and Execution Status Update
 
-import java.util.Set;
-import java.util.HashSet;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-import org.junit.Assert;
+Hi [Recipient's Name],
 
-public void validatetheenumstolistofelementsReasonfordetention(By arg0) {
-    int count = ReasonforDetention.values().length;
-    Set<String> expectedCodes = new HashSet<>();
-    ReasonforDetention[] values = ReasonforDetention.values();
-    
-    for (int index = 0; index < values.length; index++) {
-        ReasonforDetention localeCode = values[index];
-        expectedCodes.add(localeCode.getCode());
-    }
-    
-    Select select = new Select(driver.findElement(arg0));
-    List<WebElement> listofoptions = select.getOptions();
-    Set<String> actualCodes = new HashSet<>();
-    
-    for (WebElement option : listofoptions) {
-        actualCodes.add(option.getText());
-    }
-    
-    // Print sets for debugging
-    System.out.println("Expected Codes: " + expectedCodes);
-    System.out.println("Actual Codes: " + actualCodes);
-    
-    Assert.assertEquals(expectedCodes, actualCodes);
-}
+I hope this email finds you well.
+
+I wanted to clarify our current process regarding the Zephyr Jira integration. We are using the Zephyr test case ID with the ZAPI endpoint to update the execution status on the Zephyr automation cycle. This is done through RestAssured, which uses the Jira APIs and updates the test execution status directly on the Zephyr automation cycle.
+
+However, the video that was shared seems to demonstrate a different approach from what we have done earlier. It does not align with our current implementation. Let's address this discrepancy to ensure our methods are consistent.
+
+Thank you for your cooperation.
+
+Best regards,
+
+[Your Name]
