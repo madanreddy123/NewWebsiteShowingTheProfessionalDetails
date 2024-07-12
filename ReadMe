@@ -226,24 +226,33 @@ public class StepDefinitions {
 }
 
 
+import java.util.Set;
+import java.util.HashSet;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.junit.Assert;
 
-Here's an updated draft of your email including the issue with the 401 unauthorized error:
-
----
-
-Subject: Re: ZAPI possible work around for bug ACMS-98
-
-Hi Louise,
-
-Thank you for the information. Unfortunately, the Swagger APIs (such as https://prod-api.zephyr4jiracloud.com/v2/testcases) will not work within the DAFM network as they are external APIs.
-
-Additionally, when attempting to access these APIs in Postman, I am encountering a 401 unauthorized error. This indicates that there might be an issue with the API key or the authorization process.
-
-We will need to explore an alternative solution that can be utilized within our network constraints and ensure the authorization issues are resolved.
-
-Best regards,  
-[Your Name]
-
----
-
-Let me know if you need any further adjustments.
+public void validatetheenumstolistofelementsReasonfordetention(By arg0) {
+    int count = ReasonforDetention.values().length;
+    Set<String> expectedCodes = new HashSet<>();
+    ReasonforDetention[] values = ReasonforDetention.values();
+    
+    for (int index = 0; index < values.length; index++) {
+        ReasonforDetention localeCode = values[index];
+        expectedCodes.add(localeCode.getCode());
+    }
+    
+    Select select = new Select(driver.findElement(arg0));
+    List<WebElement> listofoptions = select.getOptions();
+    Set<String> actualCodes = new HashSet<>();
+    
+    for (WebElement option : listofoptions) {
+        actualCodes.add(option.getText());
+    }
+    
+    // Print sets for debugging
+    System.out.println("Expected Codes: " + expectedCodes);
+    System.out.println("Actual Codes: " + actualCodes);
+    
+    Assert.assertEquals(expectedCodes, actualCodes);
+}
