@@ -225,3 +225,49 @@ public class StepDefinitions {
     }
 }
 
+
+
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+public class JiraApiExample {
+    public static void main(String[] args) {
+        RestAssured.proxy = new HttpHost("12.2.68.69", 8080);
+        RestAssured.baseURI = "https://dafm-gov-ie.atlassian.net";
+
+        String testId = "YOUR_TEST_ID";
+        String auth = "username:password";
+        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(StandardCharsets.ISO_8859_1));
+        String authHeader = "Basic " + new String(encodedAuth);
+
+        try {
+            String response = given()
+                .pathParam("key", testId)
+                .header("Accept", "application/json")
+                .header("X-Atlassian-Token", "no-check")
+                .header("Authorization", authHeader)
+                .when()
+                .get("/rest/api/3/issue/{key}")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response()
+                .asString();
+
+            JsonPath js = new JsonPath(response);
+            String testCaseId = js.get("fields.issuetype.id").toString();
+            System.out.println(testCaseId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
