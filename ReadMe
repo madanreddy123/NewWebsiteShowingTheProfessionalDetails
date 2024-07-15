@@ -271,3 +271,98 @@ public class JiraApiExample {
     }
 }
 
+The OCR output has successfully extracted the text from the images, but it needs some cleaning up for clarity. Below is the initial processed text:
+
+```java
+// Part of the first image:
+import com.automation.framework.util.*;
+import com.atlassian.jira.rest.client.api.*;
+import com.atlassian.jira.rest.client.api.domain.BasicProject;
+import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
+import com.google.gson.JsonElement;
+import io.restassured.RestAssured;
+import io.restassured.authentication.PreemptiveBasicAuthScheme;
+import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.URIBuilder;
+
+import java.net.URI;
+import java.util.List;
+import java.util.concurrent.Promise;
+
+import static io.restassured.RestAssured.basic;
+
+public class JiraZephyrClient implements AutoCloseable {
+    private String userName;
+    private String password;
+    private JiraRestClient jiraRestClient;
+
+    public JiraZephyrClient(String jiraUrl, String zapiPath, String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+        URI jiraUri = new URIBuilder(jiraUrl).build();
+        jiraRestClient = new AsynchronousJiraRestClientFactory().createWithBasicHttpAuthentication(jiraUri, userName, password);
+        RestAssured.baseURI = jiraUri.toString() + zapiPath;
+    }
+    
+    // More methods...
+
+// Part of the second image:
+    public String createNewExecution(String cycleId, String issueId, String versionId, String projectId, String assignee, String folderId) {
+        JSONObject jsonPayload = new JSONObject();
+        jsonPayload.put("cycleId", cycleId);
+        jsonPayload.put("issueId", issueId);
+        jsonPayload.put("versionId", versionId);
+        jsonPayload.put("projectId", projectId);
+        jsonPayload.put("assignee", assignee);
+        jsonPayload.put("folderId", folderId);
+
+        String executionTarget = "/execution";
+        Response response = RestAssured.with().auth().preemptive().basic(userName, password)
+            .contentType(ContentType.JSON)
+            .body(jsonPayload.toString())
+            .post(executionTarget);
+        
+        JSONObject responseJson = new JSONObject(response.asString());
+        String executionId = responseJson.getJSONArray("executions").getJSONObject(0).getString("id");
+        return executionId;
+    }
+
+    // More methods...
+
+// Part of the third image:
+    public List<String> getCycleReleaseParentLevelKeys(JsonElement jsonElement, String prefix) {
+        List<String> keys = new ArrayList<>();
+        if (jsonElement.isJsonObject()) {
+            for (Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet()) {
+                String newPrefix = prefix + entry.getKey() + ".";
+                keys.add(newPrefix);
+                keys.addAll(getCycleReleaseParentLevelKeys(entry.getValue(), newPrefix));
+            }
+        } else if (jsonElement.isJsonArray()) {
+            for (JsonElement element : jsonElement.getAsJsonArray()) {
+                keys.addAll(getCycleReleaseParentLevelKeys(element, prefix));
+            }
+        }
+        return keys;
+    }
+
+    public Response updateExecutionStatus(String executionId, String newExecutionStatusCode, String executionComment) {
+        String updateExecutionTarget = "/execution/" + executionId + "/execute";
+        return RestAssured.with().auth().preemptive().basic(userName, password)
+            .contentType(ContentType.JSON)
+            .body(new JSONObject().put("status", newExecutionStatusCode).put("comment", executionComment).toString())
+            .put(updateExecutionTarget);
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (jiraRestClient != null) {
+            jiraRestClient.close();
+        }
+    }
+}
+```
+
+This cleaned-up version includes essential classes and methods from the OCR output. Let me know if you need further refinement or specific extraction of the code.
