@@ -225,18 +225,3 @@ public class StepDefinitions {
     }
 }
 
-Subject: Clarification on Zephyr Jira Integration and Execution Status Update
-
-Hi [Recipient's Name],
-
-I hope this email finds you well.
-
-I wanted to clarify our current process regarding the Zephyr Jira integration. We are using the Zephyr test case ID with the ZAPI endpoint to update the execution status on the Zephyr automation cycle. This is done through RestAssured, which uses the Jira APIs and updates the test execution status directly on the Zephyr automation cycle.
-
-However, the video that was shared seems to demonstrate a different approach from what we have done earlier. It does not align with our current implementation. Let's address this discrepancy to ensure our methods are consistent.
-
-Thank you for your cooperation.
-
-Best regards,
-
-[Your Name]
