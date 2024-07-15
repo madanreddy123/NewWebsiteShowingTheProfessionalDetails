@@ -467,3 +467,16 @@ public class JiraZephyrClient implements AutoCloseable {
         }
     }
 }
+test_case_id = 'your_test_case_id'
+executions_url = f'{jira_url}/rest/zapi/latest/execution?issueId={test_case_id}'
+
+response = requests.get(executions_url, auth=auth, headers=headers)
+
+if response.status_code == 200:
+    test_executions = response.json()
+    for execution in test_executions['executions']:
+        cycle_id = execution['cycleId']
+        print(f"Test Cycle ID: {cycle_id}")
+else:
+    print(f"Failed to fetch test executions: {response.status_code}, {response.text}")
+
