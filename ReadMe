@@ -467,16 +467,46 @@ public class JiraZephyrClient implements AutoCloseable {
         }
     }
 }
-test_case_id = 'your_test_case_id'
-executions_url = f'{jira_url}/rest/zapi/latest/execution?issueId={test_case_id}'
 
-response = requests.get(executions_url, auth=auth, headers=headers)
 
-if response.status_code == 200:
-    test_executions = response.json()
-    for execution in test_executions['executions']:
-        cycle_id = execution['cycleId']
-        print(f"Test Cycle ID: {cycle_id}")
-else:
-    print(f"Failed to fetch test executions: {response.status_code}, {response.text}")
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Base64;
+
+public class ZephyrAPI {
+    private static final String JIRA_URL = "https://your-jira-instance.atlassian.net";
+    private static final String API_TOKEN = "your_api_token";
+    private static final String USERNAME = "your_email@example.com";
+    private static final String TEST_CASE_ID = "your_test_case_id";
+
+    public static void main(String[] args) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            String auth = USERNAME + ":" + API_TOKEN;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+
+            HttpGet request = new HttpGet(JIRA_URL + "/rest/zapi/latest/execution?issueId=" + TEST_CASE_ID);
+            request.setHeader("Authorization", "Basic " + encodedAuth);
+            request.setHeader("Accept", "application/json");
+
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String jsonResponse = EntityUtils.toString(response.getEntity());
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode rootNode = mapper.readTree(jsonResponse);
+
+                    for (JsonNode executionNode : rootNode.path("executions")) {
+                        String cycleId = executionNode.path("cycleId").asText();
+                        System.out.println("Test Cycle ID: " + cycleId);
+                    }
+                } else {
+                    System.err.println("Failed to fetch test executions: " + response.getStatusLine().getStatusCode());
+                }
+            }
+        } catch (Exception e) {
+           
 
