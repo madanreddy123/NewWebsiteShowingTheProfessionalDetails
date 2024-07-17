@@ -510,3 +510,87 @@ public class ZephyrAPI {
         } catch (Exception e) {
            
 
+
+
+import java.util.Base64;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+
+public class JwtValidator {
+
+    private static final String SECRET_KEY = "your_secret_key"; // Replace with your secret key
+    private static final String ALGORITHM = "HmacSHA256";
+
+    public static boolean validateJwtToken(String jwtToken) throws Exception {
+        String[] parts = jwtToken.split("\\.");
+        if (parts.length != 3) {
+            return false;
+        }
+
+        String header = parts[0];
+        String payload = parts[1];
+        String signature = parts[2];
+
+        String unsignedToken = header + "." + payload;
+
+        // Decode the signature
+        byte[] decodedSignature = Base64.getUrlDecoder().decode(signature);
+
+        // Reconstruct the signature
+        Mac mac = Mac.getInstance(ALGORITHM);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), ALGORITHM);
+        mac.init(secretKeySpec);
+        byte[] expectedSignature = mac.doFinal(unsignedToken.getBytes(StandardCharsets.UTF_8));
+
+        // Compare the signatures
+        if (!MessageDigest.isEqual(decodedSignature, expectedSignature)) {
+            return false;
+        }
+
+        // Decode the payload
+        String decodedPayload = new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8);
+
+        // Parse the payload to check claims (like expiration)
+        // Assuming the payload is a JSON object
+        // You can use a JSON library like Jackson or org.json to parse it
+        // For simplicity, I'll just check the expiration claim manually
+
+        long expiration = getExpirationFromPayload(decodedPayload);
+        long now = Instant.now().getEpochSecond();
+        if (now > expiration) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static long getExpirationFromPayload(String payload) {
+        // Implement a method to parse the expiration time from the payload
+        // This is just a placeholder implementation
+        // You should parse the JSON payload properly
+        // For example, using Jackson:
+        // ObjectMapper mapper = new ObjectMapper();
+        // JsonNode node = mapper.readTree(payload);
+        // return node.get("exp").asLong();
+
+        // Placeholder implementation:
+        // Assuming the payload contains "exp" key with the expiration timestamp
+        String expStr = payload.split("\"exp\":")[1].split(",")[0].trim();
+        return Long.parseLong(expStr);
+    }
+
+    public static void main(String[] args) {
+        try {
+            String jwtToken = "your_jwt_token"; // Replace with your JWT token
+            boolean isValid = validateJwtToken(jwtToken);
+            System.out.println("JWT Token is valid: " + isValid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
