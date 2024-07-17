@@ -586,3 +586,65 @@ public class JwtValidator {
     }
 }
 
+
+
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.util.Base64;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import org.json.JSONObject;
+
+public class JwtCreator {
+
+    private static final String SECRET_KEY = "your_secret_key"; // Replace with your secret key
+    private static final String ACCESS_KEY = "your_access_key"; // Replace with your access key
+    private static final String ALGORITHM = "HmacSHA256";
+
+    public static String createJwt(String httpMethod, String apiPath) throws Exception {
+        long now = Instant.now().getEpochSecond();
+        long expiration = now + 3600;
+
+        String canonicalString = httpMethod.toUpperCase() + "&" + apiPath + "&";
+        String qsh = Base64.getUrlEncoder().withoutPadding().encodeToString(
+                MessageDigest.getInstance("SHA-256").digest(canonicalString.getBytes(StandardCharsets.UTF_8))
+        );
+
+        JSONObject header = new JSONObject();
+        header.put("alg", "HS256");
+        header.put("typ", "JWT");
+
+        JSONObject payload = new JSONObject();
+        payload.put("iss", ACCESS_KEY);
+        payload.put("iat", now);
+        payload.put("exp", expiration);
+        payload.put("qsh", qsh);
+
+        String encodedHeader = Base64.getUrlEncoder().withoutPadding().encodeToString(header.toString().getBytes(StandardCharsets.UTF_8));
+        String encodedPayload = Base64.getUrlEncoder().withoutPadding().encodeToString(payload.toString().getBytes(StandardCharsets.UTF_8));
+
+        String unsignedToken = encodedHeader + "." + encodedPayload;
+
+        Mac mac = Mac.getInstance(ALGORITHM);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), ALGORITHM);
+        mac.init(secretKeySpec);
+        byte[] signatureBytes = mac.doFinal(unsignedToken.getBytes(StandardCharsets.UTF_8));
+        String signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signatureBytes);
+
+        return unsignedToken + "." + signature;
+    }
+
+    public static void main(String[] args) {
+        try {
+            String httpMethod = "GET";
+            String apiPath = "/rest/api/2/issue/createmeta";
+            String jwtToken = createJwt(httpMethod, apiPath);
+            System.out.println("JWT Token: " + jwtToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
