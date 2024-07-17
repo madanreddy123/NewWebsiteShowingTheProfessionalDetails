@@ -648,3 +648,44 @@ public class JwtCreator {
         }
     }
 }
+
+
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+public class ZephyrClient {
+
+    private static final String BASE_URL = "https://your_zephyr_base_url"; // Replace with your Zephyr base URL
+    private static final String API_PATH = "/public/rest/api/1.0/cycle"; // Replace with the actual API path
+
+    public static void main(String[] args) {
+        try {
+            String httpMethod = "GET";
+            String jwtToken = JwtCreator.createJwt(httpMethod, API_PATH);
+
+            String url = BASE_URL + API_PATH;
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(url);
+
+            // Set headers
+            request.setHeader("Authorization", "JWT " + jwtToken);
+            request.setHeader("zapiAccessKey", "your_zephyr_access_key"); // Replace with your Zephyr access key
+
+            // Execute request
+            HttpResponse response = client.execute(request);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.out.println("Response: " + responseBody);
+
+            client.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
