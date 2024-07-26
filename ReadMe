@@ -12,680 +12,115 @@ open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
 
-    for (String macAlgorithm : Security.getAlgorithms("Mac")) {
-            System.out.println(macAlgorithm);
-        }
-
-/rest/api/latest/issue/testcaseid?
-
- <dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-    <version>4.5.13</version>
-  </dependency>
-
-  <!-- JSON parsing library -->
-  <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.12.3</version>
-  </dependency>
     
- private static final String JIRA_BASE_URL = "https://madanreddy319.atlassian.net";
-    private static final String ZEPHYR_BASE_URL = "https://prod-api.zephyr4jiracloud.com/connect";
-    private static final String API_TOKEN = "your_api_token";
-    private static final String PROJECT_KEY = "DEMO";
-    private static final String TEST_CYCLE_KEY = "DEMO-R1";
-    private static final String ISSUE_KEY = "DEMO-T1";
-    private static final String USERNAME = "madanreddy319@gmail.com"; // replace with your Jira username
 
 
-    public static void main(String[] args) {
-        String executionId = createTestExecution(ISSUE_KEY, TEST_CYCLE_KEY);
-        updateTestExecutionStatus(executionId, "PASS");
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Input and Total Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
 
-    public static String createTestExecution(String issueKey, String TEST_CYCLE_KEY) {
-        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue";
-        String jsonPayload = String.format(
-                "{\"fields\": {\"project\": {\"key\": \"%s\"}, \"summary\": \"Test Execution for %s\", \"issuetype\": {\"name\": \"Test Execution\"}, \"customfield_12345\": \"%s\"}}",
-                PROJECT_KEY, issueKey, TEST_CYCLE_KEY);
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(apiUrl);
-            request.setHeader("Content-Type", "application/json");
-            String auth = USERNAME + ":" + API_TOKEN;
-            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
-            String authHeader = "Basic " + new String(encodedAuth);
-            request.setHeader("Authorization", authHeader);
-            request.setEntity(new StringEntity(jsonPayload));
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px;
+        }
 
-            System.out.println("Request: " + request);
+        button:hover {
+            background-color: #0056b3;
+        }
 
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseString = EntityUtils.toString(response.getEntity());
-                System.out.println("Response: " + responseString);
+        .input-row {
+            margin-top: 10px;
+        }
 
-                if (statusCode != 201) {
-                    System.err.println("Failed to create test execution. HTTP error code: " + statusCode);
-                    return null;
+        input {
+            padding: 8px;
+            font-size: 14px;
+            width: 80%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        #totalDisplay {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainPage">
+        <button id="goToAddPage">Go to Add Prices Page</button>
+    </div>
+    <div class="container" id="addPage" style="display: none;">
+        <button id="addRowButton">Add Row</button>
+        <div id="inputContainer">
+            <!-- New rows with input fields will be added here -->
+        </div>
+        <button id="setTotalButton">Set Total</button>
+        <div id="totalDisplay">
+            <!-- Total will be displayed here -->
+        </div>
+    </div>
+    <script>
+        // Switch to Add Prices page
+        document.getElementById("goToAddPage").addEventListener("click", function() {
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("addPage").style.display = "block";
+        });
+
+        // Add a new row with an input field
+        document.getElementById("addRowButton").addEventListener("click", function() {
+            var newRow = document.createElement("div");
+            newRow.className = "input-row";
+            var newInput = document.createElement("input");
+            newInput.type = "number";
+            newInput.placeholder = "Enter price";
+            newInput.className = "price-input";
+            newRow.appendChild(newInput);
+            document.getElementById("inputContainer").appendChild(newRow);
+        });
+
+        // Calculate the total of all input fields
+        document.getElementById("setTotalButton").addEventListener("click", function() {
+            var inputs = document.querySelectorAll(".price-input");
+            var total = 0;
+            inputs.forEach(function(input) {
+                var value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    total += value;
                 }
-
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(responseString);
-                if (jsonNode.has("id")) {
-                    return jsonNode.get("id").asText();
-                } else {
-                    System.err.println("Response JSON does not contain 'id' field");
-                    return null;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void updateTestExecutionStatus(String executionId, String status) {
-        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue/" + executionId + "/transitions";
-        String jsonPayload = String.format("{\"transition\": {\"id\": \"%s\"}}", status.equals("PASS") ? "31" : "41"); // Example transition IDs
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(apiUrl);
-            request.setHeader("Content-Type", "application/json");
-            String auth = USERNAME + ":" + API_TOKEN;
-            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
-            String authHeader = "Basic " + new String(encodedAuth);
-            request.setHeader("Authorization", authHeader);
-            request.setEntity(new StringEntity(jsonPayload));
-
-            System.out.println("Request: " + request);
-
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                String responseString = EntityUtils.toString(response.getEntity());
-                System.out.println("Response: " + responseString);
-
-                if (statusCode != 204) {
-                    System.err.println("Failed to update test execution status. HTTP error code: " + statusCode);
-                } else {
-                    System.out.println("Test execution status updated successfully");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-}
-
-
-
-
-
-
-     
-
-
-
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.util.Base64;
-
-public class JiraIntegration {
-
-    private static final String JIRA_BASE_URL = "https://your-jira-server.com";
-    private static final String API_TOKEN = "your_api_token";
-    private static final String PROJECT_KEY = "your_project_key";
-    private static final String TEST_CYCLE_KEY = "your_test_cycle_key";
-    private static final String ISSUE_KEY = "your_test_case_key";
-
-    public static void main(String[] args) {
-        String executionId = createTestExecution(ISSUE_KEY, TEST_CYCLE_KEY);
-        updateTestExecutionStatus(executionId, "PASS");
-    }
-
-    public static String createTestExecution(String issueKey, String cycleId) {
-        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue";
-        String jsonPayload = String.format("{\"fields\": {\"project\": {\"key\": \"%s\"}, \"summary\": \"Test Execution\", \"issuetype\": {\"name\": \"Test Execution\"}}}", PROJECT_KEY);
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(apiUrl);
-            request.setHeader("Content-Type", "application/json");
-            String auth = "your_username:" + API_TOKEN;
-            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
-            String authHeader = "Basic " + new String(encodedAuth);
-            request.setHeader("Authorization", authHeader);
-            request.setEntity(new StringEntity(jsonPayload));
-
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                String responseString = EntityUtils.toString(response.getEntity());
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(responseString);
-                String executionId = jsonNode.get("id").asText();
-                return executionId;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void updateTestExecutionStatus(String executionId, String status) {
-        String apiUrl = JIRA_BASE_URL + "/rest/api/2/issue/" + executionId + "/transitions";
-        String jsonPayload = String.format("{\"transition\": {\"id\": \"%s\"}}", status.equals("PASS") ? "31" : "41"); // Example transition IDs
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(apiUrl);
-            request.setHeader("Content-Type", "application/json");
-            String auth = "your_username:" + API_TOKEN;
-            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
-            String authHeader = "Basic " + new String(encodedAuth);
-            request.setHeader("Authorization", authHeader);
-            request.setEntity(new StringEntity(jsonPayload));
-
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                String responseString = EntityUtils.toString(response.getEntity());
-                System.out.println("Response: " + responseString);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-
-
-import io.cucumber.java.en.Then;
-import static org.junit.Assert.assertTrue;
-
-public class StepDefinitions {
-
-    @Then("the test should pass")
-    public void the_test_should_pass() {
-        String executionId = JiraIntegration.createTestExecution("TEST-123", "CYCLE-1");
-        boolean testResult = runSeleniumTest();
-        String status = testResult ? "PASS" : "FAIL";
-        JiraIntegration.updateTestExecutionStatus(executionId, status);
-        assertTrue(testResult);
-    }
-
-    private boolean runSeleniumTest() {
-        // Your Selenium test logic here
-        return true;
-    }
-}
-
-
-
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
-public class JiraApiExample {
-    public static void main(String[] args) {
-
-        RestAssured.baseURI = "https://dafm-gov-ie.atlassian.net";
-
-        String testId = "YOUR_TEST_ID";
-        String auth = "username:password";
-        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(StandardCharsets.ISO_8859_1));
-        String authHeader = "Basic " + new String(encodedAuth);
-
-        try {
-            String response = given()
-                .pathParam("key", testId)
-                .header("Accept", "application/json")
-                .header("X-Atlassian-Token", "no-check")
-                .header("Authorization", authHeader)
-                .when()
-                .get("/rest/api/3/issue/{key}")
-                .then()
-                .log().all()
-                .assertThat()
-                .statusCode(200)
-                .extract()
-                .response()
-                .asString();
-
-            JsonPath js = new JsonPath(response);
-            String testCaseId = js.get("fields.issuetype.id").toString();
-            System.out.println(testCaseId);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-The OCR output has successfully extracted the text from the images, but it needs some cleaning up for clarity. Below is the initial processed text:
-
-```java
-// Part of the first image:
-import com.automation.framework.util.*;
-import com.atlassian.jira.rest.client.api.*;
-import com.atlassian.jira.rest.client.api.domain.BasicProject;
-import com.atlassian.jira.rest.client.api.domain.Issue;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.google.gson.JsonElement;
-import io.restassured.RestAssured;
-import io.restassured.authentication.PreemptiveBasicAuthScheme;
-import io.restassured.response.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.utils.URIBuilder;
-
-import java.net.URI;
-import java.util.List;
-import java.util.concurrent.Promise;
-
-import static io.restassured.RestAssured.basic;
-
-public class JiraZephyrClient implements AutoCloseable {
-    private String userName;
-    private String password;
-    private JiraRestClient jiraRestClient;
-
-    public JiraZephyrClient(String jiraUrl, String zapiPath, String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-        URI jiraUri = new URIBuilder(jiraUrl).build();
-        jiraRestClient = new AsynchronousJiraRestClientFactory().createWithBasicHttpAuthentication(jiraUri, userName, password);
-        RestAssured.baseURI = jiraUri.toString() + zapiPath;
-    }
-    
-    // More methods...
-
-// Part of the second image:
-    public String createNewExecution(String cycleId, String issueId, String versionId, String projectId, String assignee, String folderId) {
-        JSONObject jsonPayload = new JSONObject();
-        jsonPayload.put("cycleId", cycleId);
-        jsonPayload.put("issueId", issueId);
-        jsonPayload.put("versionId", versionId);
-        jsonPayload.put("projectId", projectId);
-        jsonPayload.put("assignee", assignee);
-        jsonPayload.put("folderId", folderId);
-
-        String executionTarget = "/execution";
-        Response response = RestAssured.with().auth().preemptive().basic(userName, password)
-            .contentType(ContentType.JSON)
-            .body(jsonPayload.toString())
-            .post(executionTarget);
-        
-        JSONObject responseJson = new JSONObject(response.asString());
-        String executionId = responseJson.getJSONArray("executions").getJSONObject(0).getString("id");
-        return executionId;
-    }
-
-    // More methods...
-
-// Part of the third image:
-    public List<String> getCycleReleaseParentLevelKeys(JsonElement jsonElement, String prefix) {
-        List<String> keys = new ArrayList<>();
-        if (jsonElement.isJsonObject()) {
-            for (Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet()) {
-                String newPrefix = prefix + entry.getKey() + ".";
-                keys.add(newPrefix);
-                keys.addAll(getCycleReleaseParentLevelKeys(entry.getValue(), newPrefix));
-            }
-        } else if (jsonElement.isJsonArray()) {
-            for (JsonElement element : jsonElement.getAsJsonArray()) {
-                keys.addAll(getCycleReleaseParentLevelKeys(element, prefix));
-            }
-        }
-        return keys;
-    }
-
-    public Response updateExecutionStatus(String executionId, String newExecutionStatusCode, String executionComment) {
-        String updateExecutionTarget = "/execution/" + executionId + "/execute";
-        return RestAssured.with().auth().preemptive().basic(userName, password)
-            .contentType(ContentType.JSON)
-            .body(new JSONObject().put("status", newExecutionStatusCode).put("comment", executionComment).toString())
-            .put(updateExecutionTarget);
-    }
-
-    @Override
-    public void close() throws Exception {
-        if (jiraRestClient != null) {
-            jiraRestClient.close();
-        }
-    }
-}
-```
-
-This cleaned-
-
-
-import com.automation.framework.util.*;
-import com.atlassian.jira.rest.client.api.*;
-import com.atlassian.jira.rest.client.api.domain.BasicProject;
-import com.atlassian.jira.rest.client.api.domain.Issue;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.google.gson.JsonElement;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.utils.URIBuilder;
-import org.json.JSONObject;
-import io.restassured.http.ContentType;
-
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Base64;
-
-public class JiraZephyrClient implements AutoCloseable {
-    private String userName;
-    private String password;
-    private String encodedAuth;
-    private JiraRestClient jiraRestClient;
-
-    public JiraZephyrClient(String jiraUrl, String zapiPath, String userName, String password) throws Exception {
-        this.userName = userName;
-        this.password = password;
-        this.encodedAuth = encodeCredentials(userName, password);
-
-        URI jiraUri = new URIBuilder(jiraUrl).build();
-        jiraRestClient = new AsynchronousJiraRestClientFactory().createWithBasicHttpAuthentication(jiraUri, userName, password);
-        RestAssured.baseURI = jiraUri.toString() + zapiPath;
-    }
-
-    private String encodeCredentials(String userName, String password) {
-        String auth = userName + ":" + password;
-        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(StandardCharsets.ISO_8859_1));
-        return "Basic " + new String(encodedAuth);
-    }
-    
-    // Part of the second image:
-    public String createNewExecution(String cycleId, String issueId, String versionId, String projectId, String assignee, String folderId) {
-        JSONObject jsonPayload = new JSONObject();
-        jsonPayload.put("cycleId", cycleId);
-        jsonPayload.put("issueId", issueId);
-        jsonPayload.put("versionId", versionId);
-        jsonPayload.put("projectId", projectId);
-        jsonPayload.put("assignee", assignee);
-        jsonPayload.put("folderId", folderId);
-
-        String executionTarget = "/execution";
-        Response response = RestAssured.with()
-            .header("Authorization", encodedAuth)
-            .contentType(ContentType.JSON)
-            .body(jsonPayload.toString())
-            .post(executionTarget);
-
-        JSONObject responseJson = new JSONObject(response.asString());
-        String executionId = responseJson.getJSONArray("executions").getJSONObject(0).getString("id");
-        return executionId;
-    }
-
-    // More methods...
-
-    // Part of the third image:
-    public List<String> getCycleReleaseParentLevelKeys(JsonElement jsonElement, String prefix) {
-        List<String> keys = new ArrayList<>();
-        if (jsonElement.isJsonObject()) {
-            for (Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet()) {
-                String newPrefix = prefix + entry.getKey() + ".";
-                keys.add(newPrefix);
-                keys.addAll(getCycleReleaseParentLevelKeys(entry.getValue(), newPrefix));
-            }
-        } else if (jsonElement.isJsonArray()) {
-            for (JsonElement element : jsonElement.getAsJsonArray()) {
-                keys.addAll(getCycleReleaseParentLevelKeys(element, prefix));
-            }
-        }
-        return keys;
-    }
-
-    public Response updateExecutionStatus(String executionId, String newExecutionStatusCode, String executionComment) {
-        String updateExecutionTarget = "/execution/" + executionId + "/execute";
-        return RestAssured.with()
-            .header("Authorization", encodedAuth)
-            .contentType(ContentType.JSON)
-            .body(new JSONObject().put("status", newExecutionStatusCode).put("comment", executionComment).toString())
-            .put(updateExecutionTarget);
-    }
-
-    @Override
-    public void close() throws Exception {
-        if (jiraRestClient != null) {
-            jiraRestClient.close();
-        }
-    }
-}
-
-
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Base64;
-
-public class ZephyrAPI {
-    private static final String JIRA_URL = "https://your-jira-instance.atlassian.net";
-    private static final String API_TOKEN = "your_api_token";
-    private static final String USERNAME = "your_email@example.com";
-    private static final String TEST_CASE_ID = "your_test_case_id";
-
-    public static void main(String[] args) {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            String auth = USERNAME + ":" + API_TOKEN;
-            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
-
-            HttpGet request = new HttpGet(JIRA_URL + "/rest/zapi/latest/execution?issueId=" + TEST_CASE_ID);
-            request.setHeader("Authorization", "Basic " + encodedAuth);
-            request.setHeader("Accept", "application/json");
-
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                if (response.getStatusLine().getStatusCode() == 200) {
-                    String jsonResponse = EntityUtils.toString(response.getEntity());
-                    ObjectMapper mapper = new ObjectMapper();
-                    JsonNode rootNode = mapper.readTree(jsonResponse);
-
-                    for (JsonNode executionNode : rootNode.path("executions")) {
-                        String cycleId = executionNode.path("cycleId").asText();
-                        System.out.println("Test Cycle ID: " + cycleId);
-                    }
-                } else {
-                    System.err.println("Failed to fetch test executions: " + response.getStatusLine().getStatusCode());
-                }
-            }
-        } catch (Exception e) {
-           
-
-import java.util.Base64;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class JwtValidator {
-
-    private static final String SECRET_KEY = "your_secret_key"; // Replace with your secret key
-    private static final String ALGORITHM = "HmacSHA256";
-
-    public static boolean validateJwtToken(String jwtToken) {
-        try {
-            String[] parts = jwtToken.split("\\.");
-            if (parts.length != 3) {
-                System.out.println("Invalid JWT format.");
-                return false;
-            }
-
-            String header = parts[0];
-            String payload = parts[1];
-            String signature = parts[2];
-
-            String unsignedToken = header + "." + payload;
-
-            // Decode the signature
-            byte[] decodedSignature = Base64.getUrlDecoder().decode(signature);
-
-            // Reconstruct the signature
-            Mac mac = Mac.getInstance(ALGORITHM);
-            SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), ALGORITHM);
-            mac.init(secretKeySpec);
-            byte[] expectedSignature = mac.doFinal(unsignedToken.getBytes(StandardCharsets.UTF_8));
-
-            // Compare the signatures
-            if (!MessageDigest.isEqual(decodedSignature, expectedSignature)) {
-                System.out.println("Signature mismatch.");
-                return false;
-            }
-
-            // Decode the payload
-            String decodedPayload = new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8);
-
-            // Parse the payload to check claims (like expiration)
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode payloadNode = mapper.readTree(decodedPayload);
-            long expiration = payloadNode.get("exp").asLong();
-            long now = Instant.now().getEpochSecond();
-            if (now > expiration) {
-                System.out.println("Token has expired.");
-                return false;
-            }
-
-            System.out.println("JWT Token is valid.");
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            String jwtToken = "your_jwt_token"; // Replace with your JWT token
-            boolean isValid = validateJwtToken(jwtToken);
-            System.out.println("JWT Token is valid: " + isValid);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-
-
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
-import java.util.Base64;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import org.json.JSONObject;
-
-public class JwtCreator {
-
-    private static final String SECRET_KEY = "your_secret_key"; // Replace with your secret key
-    private static final String ACCESS_KEY = "your_access_key"; // Replace with your access key
-    private static final String ALGORITHM = "HmacSHA256";
-
-    public static String createJwt(String httpMethod, String apiPath) throws Exception {
-        long now = Instant.now().getEpochSecond();
-        long expiration = now + 3600;
-
-        String canonicalString = httpMethod.toUpperCase() + "&" + apiPath + "&";
-        String qsh = Base64.getUrlEncoder().withoutPadding().encodeToString(
-                MessageDigest.getInstance("SHA-256").digest(canonicalString.getBytes(StandardCharsets.UTF_8))
-        );
-
-        JSONObject header = new JSONObject();
-        header.put("alg", "HS256");
-        header.put("typ", "JWT");
-
-        JSONObject payload = new JSONObject();
-        payload.put("iss", ACCESS_KEY);
-        payload.put("iat", now);
-        payload.put("exp", expiration);
-        payload.put("qsh", qsh);
-
-        String encodedHeader = Base64.getUrlEncoder().withoutPadding().encodeToString(header.toString().getBytes(StandardCharsets.UTF_8));
-        String encodedPayload = Base64.getUrlEncoder().withoutPadding().encodeToString(payload.toString().getBytes(StandardCharsets.UTF_8));
-
-        String unsignedToken = encodedHeader + "." + encodedPayload;
-
-        Mac mac = Mac.getInstance(ALGORITHM);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), ALGORITHM);
-        mac.init(secretKeySpec);
-        byte[] signatureBytes = mac.doFinal(unsignedToken.getBytes(StandardCharsets.UTF_8));
-        String signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signatureBytes);
-
-        return unsignedToken + "." + signature;
-    }
-
-    public static void main(String[] args) {
-        try {
-            String httpMethod = "GET";
-            String apiPath = "/rest/api/2/issue/createmeta";
-            String jwtToken = createJwt(httpMethod, apiPath);
-            System.out.println("JWT Token: " + jwtToken);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
-public class ZephyrClient {
-
-    private static final String BASE_URL = "https://your_zephyr_base_url"; // Replace with your Zephyr base URL
-    private static final String API_PATH = "/public/rest/api/1.0/cycle"; // Replace with the actual API path
-
-    public static void main(String[] args) {
-        try {
-            String httpMethod = "GET";
-            String jwtToken = JwtCreator.createJwt(httpMethod, API_PATH);
-
-            String url = BASE_URL + API_PATH;
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet request = new HttpGet(url);
-
-            // Set headers
-            request.setHeader("Authorization", "JWT " + jwtToken);
-            request.setHeader("zapiAccessKey", "your_zephyr_access_key"); // Replace with your Zephyr access key
-
-            // Execute request
-            HttpResponse response = client.execute(request);
-            String responseBody = EntityUtils.toString(response.getEntity());
-            System.out.println("Response: " + responseBody);
-
-            client.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-
-
+            });
+            document.getElementById("totalDisplay").textContent = "Total: $" + total.toFixed(2);
+        });
+    </script>
+</body>
+</html>
