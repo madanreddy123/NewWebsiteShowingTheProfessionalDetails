@@ -11,3 +11,29 @@ docker run -d -p 8080:80 --name MyWebsite personnel
 open this link
 
 https://madanreddy123.github.io/NewWebsiteShowingTheProfessionalDetails/
+
+
+
+Here's a detailed description highlighting the new things you have worked on in test automation this year:
+
+---
+
+**Test Automation Enhancements for 2024**
+
+This year, I significantly expanded my contributions to test automation through the following initiatives:
+
+1. **OpenShift Application Automation**:
+   - Played a key role in automating test cases for the OpenShift migration application, ensuring seamless execution of test cases in the OpenShift environment.
+   - Actively supported the release cycle by executing and validating OpenShift application test cases, contributing to more efficient and reliable release processes.
+
+2. **Test Data Management Integration**:
+   - Integrated comprehensive test data management strategies within the automation framework.
+   - Developed mechanisms to handle dynamic and static test data efficiently, improving the consistency and reusability of test data across multiple test runs, ultimately enhancing test accuracy and reducing maintenance efforts.
+
+3. **Automated Screenshot Generation for Passed Test Cases**:
+   - Implemented functionality to generate and store screenshots for passed test cases within the automation framework.
+   - This feature was successfully integrated into the CI/CD pipeline through Bamboo, providing visual validation for successful test executions and improving traceability and reporting for test results.
+
+---
+
+This description provides a clear, concise summary of your new test automation contributions. Let me know if you'd like to refine any part of it!
