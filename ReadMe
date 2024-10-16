@@ -8,19 +8,3 @@ running the image
 docker run -d -p 8080:80 --name MyWebsite personnel
 
 
-open this link
-
-Subject: Update on Automation Pack Execution and Potential Challenges
-
-Hi [Test Lead’s Name],
-
-I wanted to update you regarding the automation pack execution that was run locally. Please note the following details:
-
-	1.	Report Generation: When executed locally, the automation pack will only generate the Masterthought report. The report will be shared as a zip file, and anyone who needs to view it will need to download and extract the zip. Inside the folder, you will find the necessary report files to view the results.
-	2.	Execution Time: The complete execution of the automation pack will take at least 2 hours. This is based on the current test suite size and the system resources available locally. Additionally, running the automation pack locally can create challenges in working on functional testing in parallel, as system resources may be heavily utilized.
-
-Please let me know if you need any further details.
-
-Best regards,
-[Your Name]
-[Your Position]
