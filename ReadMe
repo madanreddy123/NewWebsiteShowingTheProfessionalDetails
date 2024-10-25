@@ -8,3 +8,8 @@ running the image
 docker run -d -p 8080:80 --name MyWebsite personnel
 
 
+Here is a professional revision of the text from the image:
+
+“I worked on the Test Data Management code, EXCEL Data Reader, and PDF Comparator code. Additionally, I contributed to the Proof of Concept (POC) for the Selenium Grid on OpenShift, which is currently under consideration by the EAG team. I maintained the automation application coverage at over 85% and completed the automation for the N-1 sprint. I also led the OpenShift migration testing through automation and shared the report with the team. Furthermore, I enhanced the framework by adding a full-page screenshot functionality, which is now utilized for generating screenshots of successful test cases.”
+
+This version maintains the key details while improving clarity and formality.
