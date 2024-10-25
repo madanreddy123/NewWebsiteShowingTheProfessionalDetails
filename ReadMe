@@ -8,11 +8,3 @@ running the image
 docker run -d -p 8080:80 --name MyWebsite personnel
 
 
-Here’s the text in a professional bullet-point format:
-
-	•	Worked on Test Data Management code, EXCEL Data Reader, and PDF Comparator code.
-	•	Contributed to the Proof of Concept (POC) for the Selenium Grid on OpenShift, currently under consideration by the EAG team.
-	•	Maintained automation application coverage above 85%.
-	•	Completed automation for the N-1 sprint.
-	•	Led OpenShift migration testing through automation and shared the report with the team.
-	•	Enhanced the framework by adding full-page screenshot functionality for generating screenshots of successful test cases.
